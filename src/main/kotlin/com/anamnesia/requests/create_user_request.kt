@@ -9,3 +9,8 @@ data class CreateRequestReq(
     val email: String,
     val policy_checked: Boolean = false,
 )
+
+@Serializable
+data class CreateRequestResp(
+    val cardId: Int,
+)

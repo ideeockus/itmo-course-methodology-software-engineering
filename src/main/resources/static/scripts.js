@@ -23,6 +23,7 @@ create_request_form.addEventListener('submit', (event) => {
     if (xhr.status === 200) {
       // Обработка успешного ответа сервера
       console.log('Request succeeded:', xhr.responseText);
+      window.location.replace("user_profile.html");
     } else {
       // Обработка ошибки сервера
       console.error('Request failed. Status:', xhr.status);

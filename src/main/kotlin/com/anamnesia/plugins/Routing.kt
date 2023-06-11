@@ -2,6 +2,7 @@ package com.anamnesia.plugins
 
 import com.anamnesia.repository.create_user_request
 import com.anamnesia.requests.CreateRequestReq
+import com.anamnesia.requests.CreateRequestResp
 import io.ktor.client.request.forms.*
 import io.ktor.server.routing.*
 import io.ktor.server.response.*
@@ -24,7 +25,8 @@ fun Application.configureRouting() {
             println("new card id ${new_card_id}")
             println(req)
             println("hehe")
-            call.respondText("Ok")
+//            call.respondText("Ok")
+            call.respond(CreateRequestResp(new_card_id))
         }
         // Static plugin. Try to access `/static/index.html`
 //        staticResources("/static", "static") {
