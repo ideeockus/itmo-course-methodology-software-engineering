@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Educational registration form</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <script src="scripts.js" defer></script>
+</head>
+<body>
+<div class="main-block">
+    <div class="left-part">
+        <i class="fas fa-brain"></i>
+        <h1>Заявка на оказание услуг</h1>
+    </div>
+    <form id="create_request_form">
+        <div class="title">
+            <i class="fas fa-pencil-alt"></i>
+            <h2>Заполните ваши данные</h2>
+        </div>
+        <div class="info">
+            <input class="fname" type="text" name="name" placeholder="ФИО">
+            <input type="text" name="email" placeholder="Почта">
+            <input type="text" name="phone" placeholder="Номер телефона">
+        </div>
+        <div class="checkbox">
+            <input type="checkbox" name="policy_checked"><span>Я согласен с <a href="../../../../frontend/personal_data_policy.html">Политикой</a> обработки персональных данных</span>
+        </div>
+        <button type="submit">Отправить</button>
+    </form>
+</div>
+</body>
+</html>
