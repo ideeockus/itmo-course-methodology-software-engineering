@@ -13,4 +13,5 @@ data class CreateRequestReq(
 @Serializable
 data class CreateRequestResp(
     val cardId: Int,
+    val userToken: String,
 )

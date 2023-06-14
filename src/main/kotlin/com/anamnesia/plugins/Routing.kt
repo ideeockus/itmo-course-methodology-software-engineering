@@ -26,7 +26,7 @@ fun Application.configureRouting() {
             println(req)
             println("hehe")
 //            call.respondText("Ok")
-            call.respond(CreateRequestResp(new_card_id))
+            call.respond(CreateRequestResp(new_card_id, genUserToken()))
         }
         // Static plugin. Try to access `/static/index.html`
 //        staticResources("/static", "static") {
@@ -34,4 +34,16 @@ fun Application.configureRouting() {
             resources("static")
         }
     }
+}
+
+fun genUserToken(): String {
+    val TOKEN_LEN = 22
+    return getRandomString(TOKEN_LEN)
+}
+
+fun getRandomString(length: Int) : String {
+    val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+    return (1..length)
+        .map { allowedChars.random() }
+        .joinToString("")
 }

@@ -5,6 +5,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="user_profile_styles.css">
+    <script src="user_profile_scripts.js" defer></script>
     <title>Профиль</title>
 </head>
 <body>
@@ -116,7 +117,7 @@
             </div>
             <div class="col-md-8">
                 <div class="card mb-3">
-                    <div class="card-body">
+                    <div class="card-body" id="tmp_card_body_id">
                         <div class="row">
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Ф. И. О.</h6>
@@ -144,14 +145,14 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Домашние животные</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                Котик
-                            </div>
-                        </div>
+<!--                        <div class="row">-->
+<!--                            <div class="col-sm-3">-->
+<!--                                <h6 class="mb-0">Домашние животные</h6>-->
+<!--                            </div>-->
+<!--                            <div class="col-sm-9 text-secondary">-->
+<!--                                Котик-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
@@ -201,9 +202,47 @@
                         </div>
                     </div>
             </div>
+
+
+                <div class="row gutters-sm">
+                    <div class="col-sm-12 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                Контакты родственников и знакомых
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>ФИО</th>
+                                        <th>Телефон</th>
+                                        <th>Адрес</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Иванова Анна Сергеевна</td>
+                                        <td>+7 (123) 456-7890</td>
+                                        <td>ул. Центральная, 10, Москва</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Петров Дмитрий Александрович</td>
+                                        <td>+7 (987) 654-3210</td>
+                                        <td>пр. Ленина, 5, Санкт-Петербург</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Сидорова Елена Владимировна</td>
+                                        <td>+7 (555) 123-4567</td>
+                                        <td>ул. Гагарина, 15, Новосибирск</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
 
     </div>
+</div>
 </div>
 </body>
 </html>
