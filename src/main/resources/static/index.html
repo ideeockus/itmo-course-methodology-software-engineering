@@ -6,29 +6,62 @@
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <meta charset="utf-8">
     <script src="scripts.js" defer></script>
 </head>
 <body>
 <div class="main-block">
-    <div class="left-part">
-        <i class="fas fa-brain"></i>
-        <h1>Заявка на оказание услуг</h1>
+    <div id="datawrapper">
+        
+        <div class="left-part">
+            <!--<i class="fas fa-brain"></i>
+            <h1>Заявка на оказание услуг</h1>-->
+            <table>
+                <tr id="dateCell"><td colspan="4">
+                    <input id="dateOfTimeslots" type="date">
+                </td></tr>
+                <tr>
+                    <th id="time-slot0" class="full"> 10:00 </th>
+                    <th id="time-slot4" class="full"> 12:00 </th>
+                    <th id="time-slot8" class="free"> 14:00 </th>
+                    <th id="time-slot9" class="free"> 16:00 </th>
+                </tr>
+                <tr>
+                    <th id="time-slot1" class="free"> 10:30 </th>
+                    <th id="time-slot5" class="free"> 12:30 </th>
+                    <th id="time-slot8" class="full"> 14:30 </th>
+                    <th id="time-slot9" class="free"> 16:30 </th>
+                </tr>
+                <tr>
+                    <th id="time-slot2" class="free"> 11:00 </th>
+                    <th id="time-slot6" class="full"> 13:00 </th>
+                    <th id="time-slot8" class="full"> 15:00 </th>
+                    <th id="time-slot9" class="free"> 17:00 </th>
+                </tr>
+                <tr>
+                    <th id="time-slot3" class="free"> 11:30 </th>
+                    <th id="time-slot7" class="free"> 13:30 </th>
+                    <th id="time-slot8" class="full"> 15:30 </th>
+                    <th id="time-slot9" class="free"> 17:30 </th>
+                </tr>
+            </table>
+        </div>
+        <form id="create_request_form">
+            <div class="title">
+                <i class="fas fa-pencil-alt"></i>
+                <h2>Заполните ваши данные</h2>
+            </div>
+            <div class="info">
+                <input class="fname" type="text" name="name" placeholder="ФИО" required>
+                <input type="text" name="email" placeholder="Почта" >
+                <input type="text" name="phone" placeholder="Номер телефона" required>
+            </div>
+            <div class="checkbox">
+                <input type="checkbox" name="policy_checked" required><span>Я согласен с <a href="personal_data_policy.html">Политикой</a> обработки персональных данных</span>
+            </div>
+            <button type="submit">Отправить</button>
+        </form>
     </div>
-    <form id="create_request_form">
-        <div class="title">
-            <i class="fas fa-pencil-alt"></i>
-            <h2>Заполните ваши данные</h2>
-        </div>
-        <div class="info">
-            <input class="fname" type="text" name="name" placeholder="ФИО">
-            <input type="text" name="email" placeholder="Почта">
-            <input type="text" name="phone" placeholder="Номер телефона">
-        </div>
-        <div class="checkbox">
-            <input type="checkbox" name="policy_checked"><span>Я согласен с <a href="personal_data_policy.html">Политикой</a> обработки персональных данных</span>
-        </div>
-        <button type="submit">Отправить</button>
-    </form>
 </div>
 </body>
 </html>

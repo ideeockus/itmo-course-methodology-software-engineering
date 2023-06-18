@@ -35,3 +35,48 @@ create_request_form.addEventListener('submit', (event) => {
   };
   xhr.send(jsonData);
 });
+
+function refresh_timeslots()
+{
+  // TODO: брать состояния слотов из базы и обновлять классы на free и full
+  let timeslotList = document.getElementsByTagName('th');
+  for (slot of timeslotList) {
+    if (slot.classList.contains('checked'))
+    {
+      slot.classList.add('free');
+      slot.classList.remove('checked');
+    }
+  }
+}
+
+function init()
+{
+  refresh_timeslots();
+  let timeslotList = document.getElementsByTagName('th');
+  for (slot of timeslotList) {
+    slot.onclick = markTimeslotAsSelected;
+  }
+  
+  let dateofTimeslots = document.getElementById('dateOfTimeslots');
+  const cur_date = new Date();
+  const end_date = new Date(cur_date);
+  end_date.setDate(cur_date.getDate() + 14);
+  dateofTimeslots.valueAsDate = cur_date;
+  dateofTimeslots.setAttribute("min", cur_date.getFullYear().toString() + '-' + (cur_date.getMonth()+1).toString().padStart(2, '0') + '-' + cur_date.getDate().toString().padStart(2, '0'));
+  dateofTimeslots.setAttribute("max", end_date.getFullYear().toString() + '-' + (end_date.getMonth()+1).toString().padStart(2, '0') + '-' + end_date.getDate().toString().padStart(2, '0'));
+}
+init();
+
+function markTimeslotAsSelected()
+{
+  refresh_timeslots();
+  if(this.classList.contains('free'))
+  {
+    this.classList.add('checked');
+    this.classList.remove('free');
+  }
+  else if(this.classList.contains('full'))
+  {
+    alert("На это время кто-то уже успел занять всех врачей! Попробуйте выбрать другой слот.");
+  }
+}
