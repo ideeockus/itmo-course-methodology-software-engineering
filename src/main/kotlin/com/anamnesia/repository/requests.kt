@@ -13,11 +13,12 @@ import kotlinx.coroutines.runBlocking
 
 val database = Database.connect(
 //    url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1",
-    url = "jdbc:sqlite:database.db",
+//    url = "jdbc:sqlite:database.db",
+    url = "jdbc:postgresql://localhost:5432/mse_lab_db",
     driver = "org.sqlite.JDBC",
-    user = "root",
+    user = "mse_lab_user",
 //    driver = "org.h2.Driver",
-    password = ""
+    password = "pass123",
 )
 
 
@@ -43,14 +44,14 @@ val database = Database.connect(
 //    val id = integer("id").autoIncrement().primaryKey()
 //    val name = varchar("name", length = 50)
 //}
-fun create_user_request(req: CreateRequestReq): Int {
-    val patient_repo = PatientCardRepository(database)
+fun createPatientCard(name: String, phone: String, token: String): Int {
+    val patientRepo = PatientCardRepository(database)
 
-    val new_card = PatientCard(req.name, 0)
+    val newCard = PatientCard(name, null, phone, null, token)
 
     return runBlocking {
-        val new_card_id = patient_repo.create(new_card)
-        return@runBlocking new_card_id
+        val newCardId = patientRepo.create(newCard)
+        return@runBlocking newCardId
     }
 }
 

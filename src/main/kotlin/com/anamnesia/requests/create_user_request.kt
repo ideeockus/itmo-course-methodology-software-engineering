@@ -7,7 +7,7 @@ data class CreateRequestReq(
     val name: String,
     val phone: String,
     val email: String,
-    val policy_checked: Boolean = false,
+    val policyChecked: String,
 )
 
 @Serializable

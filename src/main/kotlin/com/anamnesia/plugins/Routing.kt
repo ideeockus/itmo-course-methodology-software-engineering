@@ -1,6 +1,7 @@
 package com.anamnesia.plugins
 
-import com.anamnesia.repository.create_user_request
+import com.anamnesia.repository.createPatientCard
+import com.anamnesia.repository.createPatientCard
 import com.anamnesia.requests.CreateRequestReq
 import com.anamnesia.requests.CreateRequestResp
 import io.ktor.client.request.forms.*
@@ -20,13 +21,14 @@ fun Application.configureRouting() {
             println("чебурек")
 
             val req = call.receive<CreateRequestReq>()
-            val new_card_id = create_user_request(req)
+            val newUserToken = genUserToken()
+            val new_card_id = createPatientCard(req.name, req.phone, newUserToken)
 
             println("new card id ${new_card_id}")
             println(req)
             println("hehe")
 //            call.respondText("Ok")
-            call.respond(CreateRequestResp(new_card_id, genUserToken()))
+            call.respond(CreateRequestResp(new_card_id, newUserToken))
         }
         // Static plugin. Try to access `/static/index.html`
 //        staticResources("/static", "static") {
