@@ -3,6 +3,8 @@ package com.anamnesia.repository
 import com.anamnesia.plugins.UserService
 import com.anamnesia.repository.models.PatientCard
 import com.anamnesia.repository.models.PatientCardRepository
+import com.anamnesia.repository.models.TimeSlot
+import com.anamnesia.repository.models.TimeSlotsRepository
 import com.anamnesia.requests.CreateRequestReq
 import org.jetbrains.exposed.dao.*
 import org.jetbrains.exposed.sql.*
@@ -22,28 +24,6 @@ val database = Database.connect(
 )
 
 
-//fun main() {
-
-
-//    Database.connect("jdbc:sqlite:test.db", driver = "org.sqlite.JDBC")
-
-//    transaction {
-//        SchemaUtils.create(Users)
-//
-//        Users.insert {
-//            it[name] = "John Doe"
-//        }
-//
-//        for (user in Users.selectAll()) {
-//            println("${user[Users.name]}")
-//        }
-//    }
-//}
-
-//object Users : Table() {
-//    val id = integer("id").autoIncrement().primaryKey()
-//    val name = varchar("name", length = 50)
-//}
 fun createPatientCard(name: String, phone: String, token: String): Int {
     val patientRepo = PatientCardRepository(database)
 
@@ -55,3 +35,12 @@ fun createPatientCard(name: String, phone: String, token: String): Int {
     }
 }
 
+fun fillTimeSlot(date: String, time: String): Boolean {
+    val timeSlotRepo = TimeSlotsRepository(database)
+
+    val timeSlot = TimeSlot(0, 0, time, date)
+
+    return runBlocking {
+        return@runBlocking timeSlotRepo.create(timeSlot)
+    }
+}

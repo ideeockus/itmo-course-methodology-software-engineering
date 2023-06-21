@@ -19,6 +19,7 @@ create_request_form.addEventListener('submit', (event) => {
     alert("Вы не выбрали время");
     return
   }
+  let date = document.getElementById('dateOfTimeslots').value
 
   fetch("/create_request", {
     method: "post",
@@ -31,7 +32,8 @@ create_request_form.addEventListener('submit', (event) => {
       name: formData.get("name"),
       email: formData.get("email"),
       phone: formData.get("phone"),
-//      time: checked_time_slots[0].innerHTML,
+      time: checked_time_slots[0].innerHTML,
+      date: date,
       policyChecked: formData.get("policy_checked") == "on",
     })
   })
@@ -39,7 +41,7 @@ create_request_form.addEventListener('submit', (event) => {
      //do something awesome that makes the world a better place
      response.json().then(resp_json => {
         console.log('Request succeeded:', resp_json);
-        alert("Ваш персональный токен: " + response['userToken'])
+        alert("Ваш персональный токен: " + resp_json['userToken'])
         window.location.replace("user_profile.html");
      })
      .catch(error => {

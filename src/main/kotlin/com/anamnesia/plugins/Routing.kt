@@ -2,6 +2,7 @@ package com.anamnesia.plugins
 
 import com.anamnesia.repository.createPatientCard
 import com.anamnesia.repository.createPatientCard
+import com.anamnesia.repository.fillTimeSlot
 import com.anamnesia.requests.CreateRequestReq
 import com.anamnesia.requests.CreateRequestResp
 import io.ktor.client.request.forms.*
@@ -23,6 +24,7 @@ fun Application.configureRouting() {
             val req = call.receive<CreateRequestReq>()
             val newUserToken = genUserToken()
             val new_card_id = createPatientCard(req.name, req.phone, newUserToken)
+            val isTimeReserved = fillTimeSlot(req.date, req.time)
 
             println("new card id ${new_card_id}")
             println(req)

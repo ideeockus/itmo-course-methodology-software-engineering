@@ -8,6 +8,8 @@ data class CreateRequestReq(
     val phone: String,
     val email: String,
     val policyChecked: String,
+    val time: String,
+    val date: String,
 )
 
 @Serializable
