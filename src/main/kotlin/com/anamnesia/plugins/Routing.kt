@@ -1,10 +1,12 @@
 package com.anamnesia.plugins
 
 import com.anamnesia.repository.createPatientCard
-import com.anamnesia.repository.createPatientCard
 import com.anamnesia.repository.fillTimeSlot
+import com.anamnesia.repository.getTimeSlots
 import com.anamnesia.requests.CreateRequestReq
 import com.anamnesia.requests.CreateRequestResp
+import com.anamnesia.requests.GetTimeSlotsReq
+import com.anamnesia.requests.GetTimeSlotsResp
 import io.ktor.client.request.forms.*
 import io.ktor.server.routing.*
 import io.ktor.server.response.*
@@ -19,8 +21,6 @@ fun Application.configureRouting() {
             call.respondText("404 Sorry Not Found")
         }
         post("/create_request") {
-            println("чебурек")
-
             val req = call.receive<CreateRequestReq>()
             val newUserToken = genUserToken()
             val new_card_id = createPatientCard(req.name, req.phone, newUserToken)
@@ -29,8 +29,13 @@ fun Application.configureRouting() {
             println("new card id ${new_card_id}")
             println(req)
             println("hehe")
-//            call.respondText("Ok")
             call.respond(CreateRequestResp(new_card_id, newUserToken))
+        }
+        post("/get_time_slots") {
+            val req = call.receive<GetTimeSlotsReq>()
+
+            val timeslots = getTimeSlots(req.doctorId, req.date)
+            call.respond(GetTimeSlotsResp(timeslots))
         }
         // Static plugin. Try to access `/static/index.html`
 //        staticResources("/static", "static") {

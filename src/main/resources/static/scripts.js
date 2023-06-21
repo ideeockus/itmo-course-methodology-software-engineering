@@ -50,55 +50,9 @@ create_request_form.addEventListener('submit', (event) => {
   }
   );
 });
-//
-//<<<<<<< HEAD
-////  // Отправляем AJAX-запрос
-////  const xhr = new XMLHttpRequest();
-////  xhr.open('POST', '/create_request');
-////  xhr.setRequestHeader('Content-Type', 'application/json');
-////  xhr.onload = function () {
-////    if (xhr.status === 200) {
-////      // Обработка успешного ответа сервера
-////      console.log('Request succeeded:', xhr.responseText);
-////      var response = JSON.parse(xhr.responseText);
-////      console.log(response);
-////      alert("Ваш персональный токен: " + response['userToken'])
-////
-//////      window.location.replace("user_profile.html");
-////    } else {
-////      // Обработка ошибки сервера
-////      console.error('Request failed. Status:', xhr.status);
-////    }
-////  };
-////  xhr.send(jsonData);
-//});
-//=======
-//  const jsonData = JSON.stringify(jsonObject);
-//
-//  // Отправляем AJAX-запрос
-//  const xhr = new XMLHttpRequest();
-//  xhr.open('POST', '/create_request');
-//  xhr.setRequestHeader('Content-Type', 'application/json');
-//  xhr.onload = function () {
-//    if (xhr.status === 200) {
-//      // Обработка успешного ответа сервера
-//      console.log('Request succeeded:', xhr.responseText);
-//      var response = JSON.parse(xhr.responseText);
-//      console.log(response);
-//      alert("Ваш персональный токен: " + response['userToken'])
-//
-////      window.location.replace("user_profile.html");
-//    } else {
-//      // Обработка ошибки сервера
-//      console.error('Request failed. Status:', xhr.status);
-//    }
-//  };
-//  xhr.send(jsonData);
-//});
 
 function refresh_timeslots()
 {
-  // TODO: брать состояния слотов из базы и обновлять классы на free и full
   let timeslotList = document.getElementsByTagName('th');
   for (slot of timeslotList) {
     if (slot.classList.contains('checked'))
@@ -107,11 +61,51 @@ function refresh_timeslots()
       slot.classList.remove('checked');
     }
   }
+
+  let date = document.getElementById('dateOfTimeslots').value
+  fetch("/get_time_slots", {
+    method: "post",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    //make sure to serialize your JSON body
+    body: JSON.stringify({
+      doctorId: 0,
+      date: date,
+    })
+   })
+   .then( (response) => {
+        response.json().then(resp_json => {
+        let time_slot_counter = 0;
+        console.log('Request succeeded:', resp_json);
+//            for (const [time, state] of Object.entries(resp_json['timeslots'])) {
+            let timeslots = resp_json['timeslots']
+            for (key of Object.keys(timeslots).sort()) {
+              let time = key
+              let state = timeslots[key]
+              time_slot_elem_id = "time-slot" + time_slot_counter;
+              time_slot_counter++;
+              time_slot_elem = document.getElementById(time_slot_elem_id);
+              time_slot_elem.textContent = time
+
+              if (state == "free") {
+                time_slot_elem.classList.add('free');
+                time_slot_elem.classList.remove('full');
+              } else if (state == "full") {
+                time_slot_elem.classList.add('full');
+                time_slot_elem.classList.remove('free');
+               }
+            }
+        })
+        .catch(error => {
+        console.log('Request error:', error);
+        })
+   });
 }
 
 function init()
 {
-  refresh_timeslots();
   let timeslotList = document.getElementsByTagName('th');
   for (slot of timeslotList) {
     slot.onclick = markTimeslotAsSelected;
@@ -125,7 +119,12 @@ function init()
   dateofTimeslots.setAttribute("min", cur_date.getFullYear().toString() + '-' + (cur_date.getMonth()+1).toString().padStart(2, '0') + '-' + cur_date.getDate().toString().padStart(2, '0'));
   dateofTimeslots.setAttribute("max", end_date.getFullYear().toString() + '-' + (end_date.getMonth()+1).toString().padStart(2, '0') + '-' + end_date.getDate().toString().padStart(2, '0'));
 }
+
 init();
+document.addEventListener('DOMContentLoaded', (event) => {
+     console.log('The page has fully loaded');
+     refresh_timeslots();
+ });
 
 function markTimeslotAsSelected()
 {

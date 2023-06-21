@@ -47,9 +47,9 @@ class TimeSlotsRepository(private val database: Database) {
         }.insertedCount > 0
     }
 
-    suspend fun getSlotsByDoctorId(doctorId: Int): List<TimeSlot> {
+    suspend fun getSlotsByDoctorAndDate(doctorId: Int, date: String): List<TimeSlot> {
         return dbQuery {
-            TimeSlotTable.select { TimeSlotTable.doctor eq doctorId }
+            TimeSlotTable.select { TimeSlotTable.doctor eq doctorId and (TimeSlotTable.date eq date) }
                 .map {
                     TimeSlot(
                         it[TimeSlotTable.doctor],
