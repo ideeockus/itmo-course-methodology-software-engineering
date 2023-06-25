@@ -1,15 +1,8 @@
 package com.anamnesia.repository
 
 import com.anamnesia.common.models.TimeSlotState
-import com.anamnesia.plugins.UserService
-import com.anamnesia.repository.models.PatientCard
-import com.anamnesia.repository.models.PatientCardRepository
-import com.anamnesia.repository.models.TimeSlot
-import com.anamnesia.repository.models.TimeSlotsRepository
-import com.anamnesia.requests.CreateRequestReq
-import org.jetbrains.exposed.dao.*
+import com.anamnesia.repository.models.*
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.transactions.transaction
 import kotlinx.coroutines.runBlocking
 
 
@@ -27,13 +20,21 @@ val database = Database.connect(
 fun createPatientCard(name: String, phone: String, token: String): Int {
     val patientRepo = PatientCardRepository(database)
 
-    val newCard = PatientCard(name, null, phone, null, token)
+    val newCard = PatientCard(0, name, null, phone, null, token, listOf(), PatientState.Stage1)
 
     return runBlocking {
         val newCardId = patientRepo.create(newCard)
         return@runBlocking newCardId
     }
 }
+
+//fun getPatientCardByToken(token: String): PatientCard? {
+//    val patientRepo = PatientCardRepository(database)
+//
+//    return runBlocking {
+//        return@runBlocking patientRepo.getByToken(token)
+//    }
+//}
 
 fun fillTimeSlot(date: String, time: String): Boolean {
     val timeSlotRepo = TimeSlotsRepository(database)

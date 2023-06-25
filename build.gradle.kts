@@ -43,4 +43,5 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
     implementation("io.ktor:ktor-server-openapi:$ktor_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 }
