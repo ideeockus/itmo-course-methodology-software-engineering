@@ -8,15 +8,18 @@ import com.anamnesia.requests.CreateRequestResp
 import com.anamnesia.requests.GetTimeSlotsReq
 import com.anamnesia.requests.GetTimeSlotsResp
 import io.ktor.client.request.forms.*
-import io.ktor.server.routing.*
-import io.ktor.server.response.*
-import io.ktor.server.http.content.*
 import io.ktor.server.application.*
+import io.ktor.server.http.content.*
+import io.ktor.server.plugins.openapi.*
 import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
+
 
 fun Application.configureRouting() {
     
     routing {
+//        openAPI(path="openapi", swaggerFile = "openapi/documentation.yaml")
         get("/") {
             call.respondText("404 Sorry Not Found")
         }

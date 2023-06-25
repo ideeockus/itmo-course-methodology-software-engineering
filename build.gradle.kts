@@ -42,4 +42,5 @@ dependencies {
     implementation("org.postgresql:postgresql:42.3.1")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    implementation("io.ktor:ktor-server-openapi:$ktor_version")
 }
