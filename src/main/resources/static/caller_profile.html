@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="caller_profile.css">
+    <script src="caller_profile.js" defer></script>
+    <title>Профиль</title>
+</head>
+<body>
+    <main>
+        <div id="card">
+            <img id="avatar" src="young-man-with-glasses-and-flannel-shirt-vector.jpg" alt="Фото">
+            <h3 id="pacient_name">Карл Фердинанд</h3>
+            <p>karl@ferdinand.itmo.ru<br>+7 (920)-579-55-44</p>
+            <i class="addr" id="pacient_home">место жительства</i>
+            <i class="addr" id="pacient_work">место работы</i>
+            <a id="brainmap" href="">карта воспоминаний</a>
+            <a id="pacient_edit_btn" class="edit_btn" href="">Редактировать</a>
+            <div id="progressbar_wrapper">
+                <div id="progress_line"></div>
+                <div id="progress_points">
+                    <div class="progress_point" id="start_ok"></div>
+                    <div class="progress_point" id="interview_ok"></div>
+                    <div class="progress_point" id="brain_map_ok"></div>
+                    <div class="progress_point" id="contacts_inform_ok"></div>
+                    <div class="progress_point" id="clear_prepare_ok"></div>
+                    <div class="progress_point" id="finish"></div>
+                </div>
+                <div id="progress_description"></div>
+                <div id="next_visit">посещение: 2023-06-25 10:30</div>
+            </div>
+        </div>
+        <div id="contacts">
+            <div id="list_wrapper">
+                <div id="contact_plus"></div>
+                <div class="red_card">
+                    <h3 class="pacient_name">Карл Фердинанд</h3>
+                    <p>+7 (920)-579-55-44</p>
+                    <p>+7 (920)-579-55-44</p>
+                    <a href="" class="edit_btn">История</a>
+                    <a href="" class="edit_btn">Перейти к пациенту</a>
+                </div>
+                <div>
+                    <h3 class="pacient_name">Карл Фердинанд</h3>
+                    <p>+7 (920)-579-55-44</p>
+                    <i>место жительства</i>
+                    <a href="" class="edit_btn">История</a>
+                    <a href="" class="edit_btn">Перейти к пациенту</a>
+                </div>
+                <div class="yellow_card">
+                    <h3 class="pacient_name">Карл Фердинанд</h3>
+                    <p>+7 (920)-579-55-44</p>
+                    <i>место жительства</i>
+                    <p>+7 (920)-579-55-44</p>
+                    <i href="">место работы</i>
+                    <a href="" class="edit_btn">История</a>
+                    <a href="" class="edit_btn">Перейти к пациенту</a>
+                </div>
+                <div class="yellow_card">
+                    <h3 class="pacient_name">Карл Фердинанд</h3>
+                    <p>+7 (920)-579-55-44</p>
+                    <i>место жительства</i>
+                    <p>+7 (920)-579-55-44</p>
+                    <i href="">место работы</i>
+                    <a href="" class="edit_btn">История</a>
+                    <a href="" class="edit_btn">Перейти к пациенту</a>
+                </div>
+                <div class="green_card">
+                    <h3 class="pacient_name">Карл Фердинанд</h3>
+                    <p>+7 (920)-579-55-44</p>
+                    <i>место жительства</i>
+                    <p>+7 (920)-579-55-44</p>
+                    <i href="">место работы</i>
+                    <a href="" class="edit_btn">История</a>
+                    <a href="" class="edit_btn">Перейти к пациенту</a>
+                </div>
+            </div>
+            <div id="legend_wrapper">
+                <ul id="legend">
+                    <li id="legendItem_green"><span>Оповещён</span></li>
+                    <li id="legendItem_blue"><span>Не обработан</span></li>
+                    <li id="legendItem_yellow"><span>Обработан не успешно</span></li>
+                    <li id="legendItem_red"><span>Не удалось оповестить</span></li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
