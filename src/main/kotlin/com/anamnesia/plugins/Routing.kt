@@ -33,7 +33,7 @@ fun Application.configureRouting() {
         post("/create_request") {
             val req = call.receive<CreateRequestReq>()
             val newUserToken = genUserToken()
-            val new_card_id = createPatientCard(req.name, req.phone, newUserToken)
+            val new_card_id = createPatientCard(req.name, req.phone, req.email, newUserToken)
             val isTimeReserved = fillTimeSlot(req.date, req.time)
 
             println("new card id ${new_card_id}")

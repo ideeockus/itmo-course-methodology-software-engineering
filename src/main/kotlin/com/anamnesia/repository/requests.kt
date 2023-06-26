@@ -17,10 +17,10 @@ val database = Database.connect(
 )
 
 
-fun createPatientCard(name: String, phone: String, token: String): Int {
+fun createPatientCard(name: String, phone: String, email: String, token: String): Int {
     val patientRepo = PatientCardRepository(database)
 
-    val newCard = PatientCard(0, name, null, phone, null, token, listOf(), PatientState.Stage1)
+    val newCard = PatientCard(0, name, null, phone, email, null, token, listOf(), PatientState.Stage1)
 
     return runBlocking {
         val newCardId = patientRepo.create(newCard)

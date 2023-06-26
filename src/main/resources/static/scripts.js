@@ -42,7 +42,7 @@ create_request_form.addEventListener('submit', (event) => {
      response.json().then(resp_json => {
         console.log('Request succeeded:', resp_json);
         alert("Ваш персональный токен: " + resp_json['userToken'])
-        window.location.replace("user_profile.html");
+        window.location.replace("user_profile_v2.html?token="+resp_json['userToken']);
      })
      .catch(error => {
         console.log('Request error:', error);

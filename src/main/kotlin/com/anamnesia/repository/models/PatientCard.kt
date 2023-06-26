@@ -44,6 +44,7 @@ data class PatientCard(
     val name: String,
     val age: Int?,
     val phone: PhoneNumber,
+    val email: String,
     val address: String?,
     val token: String,
     val familiars: List<PatientFamiliar>, // List of familiars ids
@@ -87,6 +88,7 @@ class PatientCardRepository(private val database: Database) {
         val name = varchar("name", length = 50)
         val age = integer("age").nullable()
         val phone = varchar("phone", length = 15)
+        val email = varchar("email", length = 50)
         val address = varchar("address", length = 50).nullable()
         val token = varchar("token", length = 50)
         val state = enumerationByName("state", 25, PatientState::class)
@@ -110,6 +112,7 @@ class PatientCardRepository(private val database: Database) {
             it[name] = card.name
             it[age] = card.age
             it[phone] = card.phone
+            it[email] = card.email
             it[address] = card.address
             it[token] = card.token
             it[state] = card.state
@@ -122,7 +125,7 @@ class PatientCardRepository(private val database: Database) {
             it[homePhone] = familiar.homePhone ?: ""
             it[workPhone] = familiar.workPhone ?: ""
             it[homeAddress] = familiar.homeAddress ?: ""
-            it[workAddress] = familiar.workPhone ?: ""
+            it[workAddress] = familiar.workAddress ?: ""
             it[state] = familiar.state
         }[PatientFamiliarTable.id]
 
@@ -174,6 +177,7 @@ class PatientCardRepository(private val database: Database) {
                         it[PatientCardTable.name],
                         it[PatientCardTable.age],
                         it[PatientCardTable.phone],
+                        it[PatientCardTable.email],
                         it[PatientCardTable.address],
                         it[PatientCardTable.token],
                         getPatientFamiliars(patientId),
@@ -193,6 +197,7 @@ class PatientCardRepository(private val database: Database) {
                         it[PatientCardTable.name],
                         it[PatientCardTable.age],
                         it[PatientCardTable.phone],
+                        it[PatientCardTable.email],
                         it[PatientCardTable.address],
                         it[PatientCardTable.token],
                         getPatientFamiliars(it[PatientCardTable.id]),
@@ -209,6 +214,7 @@ class PatientCardRepository(private val database: Database) {
                 it[name] = card.name
                 it[age] = card.age
                 it[phone] = card.phone
+                it[email] = card.email
                 it[address] = card.address
                 it[state] = card.state
 //                it[familiars] = card.familiars
