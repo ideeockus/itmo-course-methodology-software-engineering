@@ -83,41 +83,43 @@
             </div>
         </div>
     </main>
-    <div id="hiddable_form" onclick="hiddable_close()">
-        <div id="hiddable_form_close">+</div>
-        <form id="pacient_edit_form" action="">
-            <h2>Редактирование карточки</h2>
-            <input type="text" name="name" placeholder="Имя пациента">
-            <input type="text" name="email" placeholder="Почта">
-            <input type="text" name="phone" placeholder="Номер телефона">
-            <input type="text" name="home" placeholder="Место жительства">
-            <input type="text" name="work" placeholder="Место работы">
-            <input type="text" name="avatar" placeholder="Ссылка на фото">
-            <input type="datetime-local" name="visit" value="2023-06-26T16:30">
-            <input type="submit" value="Сохранить">
-        </form>
+    <div id="hiddable_form">
+        <div id="hiddable_form_close" onclick="hiddable_close()">+</div>
+        <div id="hiddable_form_contentWrapper">
+            <form id="pacient_edit_form" action="">
+                <h2>Редактирование карточки</h2>
+                <input type="text" name="name" placeholder="Имя пациента">
+                <input type="text" name="email" placeholder="Почта">
+                <input type="text" name="phone" placeholder="Номер телефона">
+                <input type="text" name="home" placeholder="Место жительства">
+                <input type="text" name="work" placeholder="Место работы">
+                <input type="text" name="avatar" placeholder="Ссылка на фото">
+                <input type="datetime-local" name="visit" value="2023-06-26T16:30">
+                <input type="submit" value="Сохранить">
+            </form>
 
-        <form id="contact_edit_form" action="">
-            <h2>Редактирование контактного лица</h2>
-            <input type="text" name="name" placeholder="Имя контактного лица">
-            <input type="text" name="phone" placeholder="Домашний номер телефона">
-            <input type="text" name="home" placeholder="Место жительства">
-            <input type="text" name="phone" placeholder="Рабочий номер телефона">
-            <input type="text" name="work" placeholder="Место работы">
-            <input type="text" name="avatar" placeholder="Ссылка на фото">
-            <input type="submit" value="Сохранить">
-        </form>
+            <form id="contact_edit_form" action="">
+                <h2>Редактирование контактного лица</h2>
+                <input type="text" name="name" placeholder="Имя контактного лица">
+                <input type="text" name="phone" placeholder="Домашний номер телефона">
+                <input type="text" name="home" placeholder="Место жительства">
+                <input type="text" name="phone" placeholder="Рабочий номер телефона">
+                <input type="text" name="work" placeholder="Место работы">
+                <input type="text" name="avatar" placeholder="Ссылка на фото">
+                <input type="submit" value="Сохранить">
+            </form>
 
-        <form id="contact_add_form" action="">
-            <h2>Добавление контактного лица</h2>
-            <input type="text" name="name" placeholder="Имя контактного лица">
-            <input type="text" name="phone" placeholder="Домашний номер телефона">
-            <input type="text" name="home" placeholder="Место жительства">
-            <input type="text" name="phone" placeholder="Рабочий номер телефона">
-            <input type="text" name="work" placeholder="Место работы">
-            <input type="text" name="avatar" placeholder="Ссылка на фото">
-            <input type="submit" value="Сохранить">
-        </form>
+            <form id="contact_add_form" action="">
+                <h2>Добавление контактного лица</h2>
+                <input type="text" name="name" placeholder="Имя контактного лица">
+                <input type="text" name="phone" placeholder="Домашний номер телефона">
+                <input type="text" name="home" placeholder="Место жительства">
+                <input type="text" name="phone" placeholder="Рабочий номер телефона">
+                <input type="text" name="work" placeholder="Место работы">
+                <input type="text" name="avatar" placeholder="Ссылка на фото">
+                <input type="submit" value="Сохранить">
+            </form>
+        </div>
     </div>
 </body>
 </html>

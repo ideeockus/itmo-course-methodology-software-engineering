@@ -117,7 +117,7 @@ main > div
 {
     display: none;
     position: fixed;
-    top: 0px;
+    left: 0; top: 0;
     bottom: 0px;
     min-width: 100%;
     min-height: 100%;
@@ -141,6 +141,8 @@ main > div
     rotate: 45deg;
     font-weight: bolder;
     cursor: pointer;
+
+    z-index: 10000;
 }
 
 #hiddable_form_close:hover
@@ -148,21 +150,27 @@ main > div
     color:red;
 }
 
-#hiddable_form > form
+#hiddable_form_contentWrapper
 {
     width: 80%;
     margin: auto;
-    padding: 20px 40px 20px 40px;
     background-color: #E2E8F0;
-    border-radius: 10px;
     max-width: 500px;
+    border-radius: 10px;
+    max-height: 100%;
+    overflow: auto;
+}
+
+#hiddable_form_contentWrapper > form
+{
+    padding: 20px 40px 20px 40px;
     padding-bottom: 40px;
 }
-#hiddable_form > form > *
+#hiddable_form_contentWrapper > form > *
 {
     display: block;
     width: 100%;
-    font-size: 18pt;
+    font-size: 14pt;
     margin-top: 10px;
     font-family: Arial, Helvetica, sans-serif;
     border-radius: 5px;
