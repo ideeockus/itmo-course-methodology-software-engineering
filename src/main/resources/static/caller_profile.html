@@ -107,7 +107,20 @@
                     <p">звонок на домашний: вчера 17:00</p>
                     <p">звонок на домашний: вчера 17:00</p>
                     <p>звонок на домашний: вчера 17:00</p>
-                    <div id="add_action">+</div>
+                    <div id="add_action" onclick="open_adding_action()">+</div>
+                    <form id="add_action_form" action="" onmouseleave="close_adding_action()">
+                        <select name="action_type" id="">
+                            <option value="home_phone">звонок на домашний</option>
+                            <option value="work_phone">звонок на рабочий</option>
+                            <option value="home_addr">посещение места жительства</option>
+                            <option value="work_addr">посещение работы</option>
+                        </select>
+                        <select name="success_type" id="">
+                            <option value="successful">успешно</option>
+                            <option value="unsuccessful">неуспешно</option>
+                        </select>
+                        <input type="submit" value="добавить">
+                    </form>
                 </div>
             </div>
         </div>
