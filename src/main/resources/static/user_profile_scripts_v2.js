@@ -135,3 +135,39 @@ async function getPatientCard(token) {
 //    })
 //   }
 }
+
+function hiddable_close()
+{
+  this.document.getElementById("hiddable_form").setAttribute("style","display:none;");
+}
+
+function edit_card()
+{
+  // this.document.body.setAttribute("style","overflow:hidden;");
+  this.document.getElementById("pacient_edit_form").setAttribute("style","display:block;");
+  this.document.getElementById("contact_edit_form").setAttribute("style","display:none;");
+  this.document.getElementById("contact_add_form").setAttribute("style","display:none;");
+  
+  let height = this.document.getElementById("pacient_edit_form").offsetWidth + 100;
+  this.document.getElementById("hiddable_form").setAttribute("style","display:block; height: "+height+"px");
+}
+
+function edit_contact()
+{
+  this.document.getElementById("pacient_edit_form").setAttribute("style","display:none;");
+  this.document.getElementById("contact_edit_form").setAttribute("style","display:block;");
+  this.document.getElementById("contact_add_form").setAttribute("style","display:none;");
+
+  let height = this.document.getElementById("contact_edit_form").offsetWidth + 100;
+  this.document.getElementById("hiddable_form").setAttribute("style","display:block; height: "+height+"px");
+}
+
+function add_contact()
+{
+  this.document.getElementById("pacient_edit_form").setAttribute("style","display:none;");
+  this.document.getElementById("contact_edit_form").setAttribute("style","display:none;");
+  this.document.getElementById("contact_add_form").setAttribute("style","display:block;");
+
+  let height = this.document.getElementById("contact_add_form").offsetWidth + 100;
+  this.document.getElementById("hiddable_form").setAttribute("style","display:block; height: "+height+"px");
+}

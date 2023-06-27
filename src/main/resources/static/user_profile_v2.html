@@ -18,7 +18,7 @@
             <i class="addr" id="pacient_home">место жительства</i>
             <i class="addr" id="pacient_work">место работы</i>
             <a id="brainmap" href="">карта воспоминаний</a>
-            <a id="pacient_edit_btn" class="edit_btn" href="">Редактировать</a>
+            <span id="pacient_edit_btn" class="edit_btn" onclick="edit_card()">Редактировать</span>
             <div id="progressbar_wrapper">
                 <div id="progress_line"></div>
                 <div id="progress_points">
@@ -35,12 +35,18 @@
         </div>
         <div id="contacts">
             <div id="list_wrapper">
-                <div id="contact_plus"></div>
+                <div id="contact_plus" onclick="add_contact()"></div>
                 <div class="red_card">
                     <h3 class="pacient_name">Карл Фердинанд</h3>
                     <p>+7 (920)-579-55-44</p>
                     <p>+7 (920)-579-55-44</p>
-                    <a href="" class="edit_btn">Редактировать</a>
+                    <span href="" class="edit_btn" onclick="edit_contact()">Редактировать</span>
+                </div>
+                <div>
+                    <h3 class="pacient_name">Карл Фердинанд</h3>
+                    <p>+7 (920)-579-55-44</p>
+                    <i>место жительства</i>
+                    <span href="" class="edit_btn" onclick="edit_contact()">Редактировать</span>
                 </div>
                 <div class="yellow_card">
                     <h3 class="pacient_name">Карл Фердинанд</h3>
@@ -48,7 +54,7 @@
                     <i>место жительства</i>
                     <p>+7 (920)-579-55-44</p>
                     <i href="">место работы</i>
-                    <a href="" class="edit_btn">Редактировать</a>
+                    <span href="" class="edit_btn" onclick="edit_contact()">Редактировать</span>
                 </div>
                 <div class="yellow_card">
                     <h3 class="pacient_name">Карл Фердинанд</h3>
@@ -56,7 +62,7 @@
                     <i>место жительства</i>
                     <p>+7 (920)-579-55-44</p>
                     <i href="">место работы</i>
-                    <a href="" class="edit_btn">Редактировать</a>
+                    <span href="" class="edit_btn" onclick="edit_contact()">Редактировать</span>
                 </div>
                 <div class="green_card">
                     <h3 class="pacient_name">Карл Фердинанд</h3>
@@ -64,7 +70,7 @@
                     <i>место жительства</i>
                     <p>+7 (920)-579-55-44</p>
                     <i href="">место работы</i>
-                    <a href="" class="edit_btn">Редактировать</a>
+                    <span href="" class="edit_btn" onclick="edit_contact()">Редактировать</span>
                 </div>
             </div>
             <div id="legend_wrapper">
@@ -77,5 +83,43 @@
             </div>
         </div>
     </main>
+    <div id="hiddable_form">
+        <div id="hiddable_form_close" onclick="hiddable_close()">+</div>
+        <div id="hiddable_form_contentWrapper">
+            <form id="pacient_edit_form" action="">
+                <h2>Редактирование карточки</h2>
+                <input type="text" name="name" placeholder="Имя пациента">
+                <input type="text" name="email" placeholder="Почта">
+                <input type="text" name="phone" placeholder="Номер телефона">
+                <input type="text" name="home" placeholder="Место жительства">
+                <input type="text" name="work" placeholder="Место работы">
+                <input type="text" name="avatar" placeholder="Ссылка на фото">
+                <input type="datetime-local" name="visit" value="2023-06-26T16:30">
+                <input type="submit" value="Сохранить">
+            </form>
+
+            <form id="contact_edit_form" action="">
+                <h2>Редактирование контактного лица</h2>
+                <input type="text" name="name" placeholder="Имя контактного лица">
+                <input type="text" name="phone" placeholder="Домашний номер телефона">
+                <input type="text" name="home" placeholder="Место жительства">
+                <input type="text" name="phone" placeholder="Рабочий номер телефона">
+                <input type="text" name="work" placeholder="Место работы">
+                <input type="text" name="avatar" placeholder="Ссылка на фото">
+                <input type="submit" value="Сохранить">
+            </form>
+
+            <form id="contact_add_form" action="">
+                <h2>Добавление контактного лица</h2>
+                <input type="text" name="name" placeholder="Имя контактного лица">
+                <input type="text" name="phone" placeholder="Домашний номер телефона">
+                <input type="text" name="home" placeholder="Место жительства">
+                <input type="text" name="phone" placeholder="Рабочий номер телефона">
+                <input type="text" name="work" placeholder="Место работы">
+                <input type="text" name="avatar" placeholder="Ссылка на фото">
+                <input type="submit" value="Сохранить">
+            </form>
+        </div>
+    </div>
 </body>
 </html>
