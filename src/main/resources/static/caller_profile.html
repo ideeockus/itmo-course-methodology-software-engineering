@@ -16,8 +16,8 @@
             <p>karl@ferdinand.itmo.ru<br>+7 (920)-579-55-44</p>
             <i class="addr" id="pacient_home">место жительства</i>
             <i class="addr" id="pacient_work">место работы</i>
-            <a id="brainmap" href="">карта воспоминаний</a>
-            <a id="pacient_edit_btn" class="edit_btn" href="">Редактировать</a>
+            <a id="brainmap">карта воспоминаний</a>
+            <span id="pacient_edit_btn" class="edit_btn" onclick="edit_card()">Редактировать</span>
             <div id="progressbar_wrapper">
                 <div id="progress_line"></div>
                 <div id="progress_points">
@@ -39,14 +39,14 @@
                     <h3 class="pacient_name">Карл Фердинанд</h3>
                     <p>+7 (920)-579-55-44</p>
                     <p>+7 (920)-579-55-44</p>
-                    <a href="" class="edit_btn">История</a>
+                    <span class="edit_btn" onclick="open_history()">История</span>
                     <a href="" class="edit_btn">Перейти к пациенту</a>
                 </div>
                 <div>
                     <h3 class="pacient_name">Карл Фердинанд</h3>
                     <p>+7 (920)-579-55-44</p>
                     <i>место жительства</i>
-                    <a href="" class="edit_btn">История</a>
+                    <span class="edit_btn" onclick="open_history()">История</span>
                     <a href="" class="edit_btn">Перейти к пациенту</a>
                 </div>
                 <div class="yellow_card">
@@ -54,8 +54,8 @@
                     <p>+7 (920)-579-55-44</p>
                     <i>место жительства</i>
                     <p>+7 (920)-579-55-44</p>
-                    <i href="">место работы</i>
-                    <a href="" class="edit_btn">История</a>
+                    <i>место работы</i>
+                    <span class="edit_btn" onclick="open_history()">История</span>
                     <a href="" class="edit_btn">Перейти к пациенту</a>
                 </div>
                 <div class="yellow_card">
@@ -63,8 +63,8 @@
                     <p>+7 (920)-579-55-44</p>
                     <i>место жительства</i>
                     <p>+7 (920)-579-55-44</p>
-                    <i href="">место работы</i>
-                    <a href="" class="edit_btn">История</a>
+                    <i>место работы</i>
+                    <span class="edit_btn" onclick="open_history()">История</span>
                     <a href="" class="edit_btn">Перейти к пациенту</a>
                 </div>
                 <div class="green_card">
@@ -72,8 +72,8 @@
                     <p>+7 (920)-579-55-44</p>
                     <i>место жительства</i>
                     <p>+7 (920)-579-55-44</p>
-                    <i href="">место работы</i>
-                    <a href="" class="edit_btn">История</a>
+                    <i>место работы</i>
+                    <span class="edit_btn" onclick="open_history()">История</span>
                     <a href="" class="edit_btn">Перейти к пациенту</a>
                 </div>
             </div>
@@ -84,6 +84,31 @@
                     <li id="legendItem_yellow"><span>Обработан не успешно</span></li>
                     <li id="legendItem_red"><span>Не удалось оповестить</span></li>
                 </ul>
+            </div>
+        </div>
+
+        <div id="hiddable_form">
+            <div id="hiddable_form_close" onclick="hiddable_close()">+</div>
+            <div id="hiddable_form_contentWrapper">
+                <form id="pacient_edit_form" action="">
+                    <h2>Редактирование карточки</h2>
+                    <input type="text" name="name" placeholder="Имя">
+                    <input type="text" name="email" placeholder="Почта">
+                    <input type="text" name="phone" placeholder="Номер телефона">
+                    <input type="text" name="home" placeholder="Место жительства">
+                    <input type="text" name="avatar" placeholder="Ссылка на фото">
+                    <input type="submit" value="Сохранить">
+                </form>
+                <div id="history">
+                    <p">звонок на домашний: вчера 17:00</p>
+                    <p">звонок на домашний: вчера 17:00</p>
+                    <p">звонок на домашний: вчера 17:00</p>
+                    <p">звонок на домашний: вчера 17:00</p>
+                    <p">звонок на домашний: вчера 17:00</p>
+                    <p">звонок на домашний: вчера 17:00</p>
+                    <p>звонок на домашний: вчера 17:00</p>
+                    <div id="add_action">+</div>
+                </div>
             </div>
         </div>
     </main>

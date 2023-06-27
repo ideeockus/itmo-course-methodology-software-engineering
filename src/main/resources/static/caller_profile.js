@@ -30,3 +30,28 @@ function resize_contact_list()
   let contacts_width = this.document.getElementById("card").offsetWidth *3;
   this.document.getElementById("list_wrapper").setAttribute("style","width:"+ contacts_width +"px");
 }
+
+function hiddable_close()
+{
+  this.document.getElementById("hiddable_form").setAttribute("style","display:none;");
+}
+
+function edit_card()
+{
+  // this.document.body.setAttribute("style","overflow:hidden;");
+  this.document.getElementById("pacient_edit_form").setAttribute("style","display:block;");
+  this.document.getElementById("history").setAttribute("style","display:none;");
+  
+  let height = this.document.getElementById("pacient_edit_form").offsetWidth + 100;
+  this.document.getElementById("hiddable_form").setAttribute("style","display:block; height: "+height+"px");
+}
+
+function open_history()
+{
+  // this.document.body.setAttribute("style","overflow:hidden;");
+  this.document.getElementById("pacient_edit_form").setAttribute("style","display:none;");
+  this.document.getElementById("history").setAttribute("style","display:block;");
+  
+  let height = this.document.getElementById("pacient_edit_form").offsetWidth + 100;
+  this.document.getElementById("hiddable_form").setAttribute("style","display:block; height: "+height+"px");
+}
