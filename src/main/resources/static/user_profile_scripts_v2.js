@@ -68,7 +68,14 @@ function fillContacts(familiars) {
     familiars.forEach((familiar) => {
         // Create the green_card div
         const greenCardDiv = document.createElement('div');
-        greenCardDiv.classList.add('green_card');
+
+        let color_class = {
+            'NotifiedSuccessful': "green_card",
+            'NotProcessed': "blue_card",
+            'FailedToNotify': "red_card",
+            'ProcessedUnsuccessful': "yellow_card",
+        }[familiar['state']];
+        greenCardDiv.classList.add(color_class);
 
         // Create the h3 element for the pacient_name
         const h3Element = document.createElement('h3');
@@ -104,7 +111,7 @@ function fillContacts(familiars) {
         greenCardDiv.appendChild(firstIElement);
         greenCardDiv.appendChild(secondPElement);
         greenCardDiv.appendChild(secondIElement);
-        greenCardDiv.appendChild(editBtnAnchor);
+//        greenCardDiv.appendChild(editBtnAnchor);
 
         list_wrapper.appendChild(greenCardDiv);
     });
@@ -171,3 +178,87 @@ function add_contact()
   let height = this.document.getElementById("contact_add_form").offsetWidth + 100;
   this.document.getElementById("hiddable_form").setAttribute("style","display:block; height: "+height+"px");
 }
+
+
+
+
+// обработка редактирования карточки
+const pacient_edit_form = document.getElementById('pacient_edit_form');
+pacient_edit_form.addEventListener('submit', (event) => {
+  event.preventDefault(); // Отменяем стандартное поведение формы (перезагрузку страницы)
+
+  let formData = new FormData(pacient_edit_form);
+//  let date = document.getElementById('dateOfTimeslots').value
+
+  fetch("/edit_patient_card", {
+    method: "post",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      patientId: patientCardData['patientCard']['id'],
+      patientCard: {
+          id: patientCardData['patientCard']['id'],
+          name: formData.get("name"),
+          age: patientCardData['patientCard']['age'],
+          email: formData.get("email"),
+          phone: formData.get("phone"),
+          address: formData.get("home"),
+//          photo_url: formData.get("avatar"),
+          token: patientCardData['patientCard']['token'],
+          familiars: patientCardData['patientCard']['familiars'],
+          state: patientCardData['patientCard']['state'],
+      }
+    })
+  })
+  .then( (response) => {
+     response.json().then(resp_json => {
+        console.log('Request succeeded:', resp_json);
+        window.location.replace("user_profile_v2.html?token="+patientCardData['patientCard']['token']);
+     })
+     .catch(error => {
+        console.log('Request error:', error);
+     })
+  }
+  );
+});
+
+
+// обработка добавления знакомого
+const contact_add_form = document.getElementById('contact_add_form');
+contact_add_form.addEventListener('submit', (event) => {
+  event.preventDefault(); // Отменяем стандартное поведение формы (перезагрузку страницы)
+
+  let formData = new FormData(contact_add_form);
+//  let date = document.getElementById('dateOfTimeslots').value
+
+  fetch("/add_patient_familiar", {
+    method: "post",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      patientId: patientCardData['patientCard']['id'],
+      familiar: {
+          name: formData.get("name"),
+          homePhone: formData.get("phone_home"),
+          workPhone: formData.get("phone_work"),
+          homeAddress: formData.get("home"),
+          workAddress: formData.get("work"),
+          state: "NotProcessed",
+      }
+    })
+  })
+  .then( (response) => {
+     response.json().then(resp_json => {
+        console.log('Request succeeded:', resp_json);
+        window.location.replace("user_profile_v2.html?token="+patientCardData['patientCard']['token']);
+     })
+     .catch(error => {
+        console.log('Request error:', error);
+     })
+  }
+  );
+});

@@ -29,7 +29,7 @@ enum class FamiliarState {
 
 @Serializable
 data class PatientFamiliar(
-    val familiarId: Int,
+    val familiarId: Int = 0,
     val name: String,
     val homePhone: PhoneNumber?,
     val workPhone: PhoneNumber?,
