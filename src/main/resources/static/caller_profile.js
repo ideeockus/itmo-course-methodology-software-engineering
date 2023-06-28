@@ -55,3 +55,13 @@ function open_history()
   let height = this.document.getElementById("pacient_edit_form").offsetWidth + 100;
   this.document.getElementById("hiddable_form").setAttribute("style","display:block; height: "+height+"px");
 }
+
+function open_adding_action()
+{
+  this.document.getElementById("add_action_form").setAttribute("style","display:block;");
+}
+
+function close_adding_action()
+{
+  this.document.getElementById("add_action_form").setAttribute("style","display:none;");
+}
