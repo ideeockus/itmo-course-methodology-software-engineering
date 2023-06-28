@@ -21,6 +21,12 @@ function fillCardData() {
   let userToken = urlParams.get('token');
   let isDoctor = urlParams.get('isDoctor');
 
+  if (isDoctor == "true") {
+    console.log('is doctor');
+    let pacient_scan_btn = document.getElementById('pacient_scan_btn');
+    pacient_scan_btn.style.display = "block";
+  }
+
   if (userToken === null) {
     return
   }
@@ -262,3 +268,76 @@ contact_add_form.addEventListener('submit', (event) => {
   }
   );
 });
+
+
+
+function popup_patient_scan_progress() {  
+  let myDialog = document.createElement("dialog");
+  myDialog.style.width = "50%";
+  document.body.appendChild(myDialog)
+  let text = document.createTextNode("Начинаем сканирование...");
+  myDialog.appendChild(text);
+  myDialog.showModal();
+
+  myDialog.addEventListener('click', (event) => {
+    myDialog.remove();
+  })
+
+  // const statuses = ["Loading step 1", "Loading step 2", "Loading step 3", "Loading step 4"];
+  // let currentIndex = 0;
+
+
+  // Create the progress bar element
+  var myProgress = document.createElement("div");
+  myProgress.id = "myProgress";
+
+  // Add the CSS styles to the progress bar element
+  myProgress.style.width = "100%";
+  myProgress.style.backgroundColor = "grey";
+
+  // Create the progress bar element
+  var myBar = document.createElement("div");
+
+  // Add the CSS styles to the progress bar element
+  myBar.style.width = "1%";
+  myBar.style.height = "30px";
+  myBar.style.backgroundColor = "green";
+
+  // Append the progress bar element to the progress element
+  myProgress.appendChild(myBar);
+
+  // Add the progress element to the document body
+  myDialog.appendChild(myProgress);
+
+  let states = ["Поиск воспоминаний...", "Продолжайте думать, идет запись участка мозга", "Думайте о своем объекте...", "Сконцентрируйтесь, мозг сканируется"]
+
+
+
+  var i = 0;
+  function move() {
+    if (i == 0) {
+      i = 1;
+      // var elem = document.getElementById("myBar");
+      var width = 1;
+      var id = setInterval(frame, 500);
+      function frame() {
+        let r = Math.floor(Math.random()*100);
+        if (r < 18) {
+          var state = states[Math.floor(Math.random()*states.length)];
+          text.textContent = state;
+        }
+        
+
+        if (width >= 100) {
+          clearInterval(id);
+          i = 0;
+          text.textContent = "Сканирование завершено!";
+        } else {
+          width++;
+          myBar.style.width = width + "%";
+        }
+      }
+    }
+  } 
+  move()
+}
