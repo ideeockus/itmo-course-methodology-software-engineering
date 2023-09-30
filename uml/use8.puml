@@ -1,0 +1,23 @@
+@startuml
+left to right direction
+
+title UC8: просмотр статистики
+
+actor менеджер
+actor отчёты
+
+usecase "формирование статистики" as prepare
+usecase "просмотр статистики" as view
+usecase фильтрация
+usecase сортировка
+usecase "графическое представление" as graphics
+
+отчёты --> prepare
+менеджер --> view
+prepare .> view
+
+view <.. фильтрация
+view <.. сортировка
+view <.. graphics
+
+@enduml

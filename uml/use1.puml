@@ -1,0 +1,21 @@
+@startuml
+left to right direction
+
+title UC1: прохождение интервью
+
+actor пациент
+actor доктор
+usecase "посещение" as become
+usecase "медосмотр" as test
+usecase "заполнение документов" as docs
+usecase "проверка и дополнение данных" as validate
+
+пациент --> become
+validate <. become 
+пациент ..> test
+test .> docs
+become .> test
+test <-- доктор
+validate <-- доктор
+
+@enduml

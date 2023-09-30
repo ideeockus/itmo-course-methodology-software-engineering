@@ -1,0 +1,21 @@
+@startuml
+'left to right direction
+
+title UC6: приёмка оборудования
+
+actor техник
+actor "карточка оборудования" as card_t
+
+usecase "проверка оборудования" as tec_check
+usecase "получение оборудования" as get_tools
+usecase "размещение на складе" as move_to_warehouse
+
+'техник --> get_tools
+get_tools <-- техник
+get_tools .> tec_check
+
+tec_check .> move_to_warehouse
+'card_t ..> move_to_warehouse
+move_to_warehouse <.. card_t
+
+@enduml

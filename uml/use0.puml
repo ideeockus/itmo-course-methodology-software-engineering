@@ -1,0 +1,15 @@
+@startuml
+left to right direction
+
+title UC0: оформление заявки
+
+actor пациент
+usecase "заполнить форму заявки" as act_11
+usecase "получить уникальный идентификатор" as act_12
+usecase "заполнить личные данные" as act_2
+
+пациент --> act_11
+act_12 <. act_11
+act_2 <. act_12
+
+@enduml

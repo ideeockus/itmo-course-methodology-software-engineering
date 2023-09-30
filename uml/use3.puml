@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+
+title UC3: оповещение контактов
+
+'actor "карточка контакта" as card_
+actor "агент службы оповещения" as caller
+actor "контактное лицо" as contact
+
+usecase "определить метод связи" as check
+usecase "оповестить контакт" as call
+
+caller --> check
+'card_ ..> check
+check .> call
+call <.. contact
+
+@enduml

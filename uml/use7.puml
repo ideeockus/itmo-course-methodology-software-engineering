@@ -1,0 +1,23 @@
+@startuml
+left to right direction
+
+title UC7: обслуживание оборудования
+
+actor техник
+actor "карточка оборудования" as card_t
+
+usecase "уведомление\nо плановом\nобслуживании" as message
+usecase "проверка\nоборудования" as check_tools
+usecase "получение\nоборудования" as get_tools
+usecase "Обслуживание\nоборудования" as process_tools
+usecase "размещение на складе" as move_to_warehouse
+
+card_t --> message
+message <.. техник
+
+message .> get_tools
+get_tools ..> check_tools
+check_tools ..> process_tools
+process_tools .> move_to_warehouse
+
+@enduml

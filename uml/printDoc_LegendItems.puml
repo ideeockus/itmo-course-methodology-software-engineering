@@ -1,0 +1,118 @@
+@startuml
+
+class PrintRibbonUI
+{
+    +docSettings_btn : QAction*
+    +docSubSettings_btn : QAction*
+    +backStyleSettings_btn : QAction*
+}
+
+note left of PrintRibbonUI::docSettings_btn
+    открывает m_widgetUi (список элементов)
+end note
+
+note left of PrintRibbonUI::docSubSettings_btn
+    открывает m_subwidgetUi (свойства элементов)
+end note
+
+note left of PrintRibbonUI::backStyleSettings_btn
+    открывает m_settingsWgt (настройки)
+end note
+
+class PrintWidget
+{
+    -m_ribbonUi : PrintRibbonUI*
+    -m_widgetUi : PrintWidgetUI*
+    -m_subwidgetUi : LegendWidgetUI*
+    -m_settingsWgt : BaguetteDlg*
+    +setTknLegendSettingsWgt(QWidget*)
+    +setTextLegendSettingsWgt(QWidget*)
+}
+
+class PrintWidgetUI
+{
+    --[сигналы]--
+    sig_legend_setType(int)
+    sig_legend_setEditable(const uint&, bool)
+}
+
+class LegendWidgetUI
+{
+    m_tknLegendWgt : QWidget*
+    m_txtLegendWgt : QWidget*
+    m_imgLegendWgt : QWidget*
+    m_mapLegendWgt : QWidget*
+    <b>editBut : QPushButton*</b>
+    +setTknLegendSettingsWgt(QWidget*)
+    +setTextLegendSettingsWgt(QWidget*)
+    +addElementEditor(QWidget*)
+    +legend_setType(int)
+}
+
+class TknTxtLegendWidget
+{
+    <s>ui->editBut : QPushButton</s>
+}
+
+class InterfaceTemplate
+{
+    #m_printTool : GisPrintTmplInputInterface*
+    +void setPrintTool(GisPrintTmplInputInterface*)
+}
+
+class GisPrintTmplInputInterface 
+{
+    +legend_editToken()
+}
+note left of GisPrintTmplInputInterface::legend_editToken
+    обработчик вызова редактора
+    знака из дерева элементов оформления
+    графического документа
+end note
+
+GisPrintTmplInputInterface --> InterfaceTemplate
+
+PrintWidget --> PrintRibbonUI
+PrintWidget <.. PrintRibbonUI
+'PrintRibbonUI ..> PrintWidgetUI
+PrintWidgetUI <.. PrintRibbonUI
+note on link: docSubSettings_btn дублируется с ui->m_actLegend
+'PrintRibbonUI <-- PrintWidget
+PrintWidgetUI <- PrintWidget
+'PrintWidget <- LegendWidgetUI
+LegendWidgetUI <-- PrintWidget
+PrintWidget -> BaguetteDlg
+SettingsWidget <-- BaguetteDlg
+'BaguetteDlg -> PrintWidget
+
+InterfaceTemplate ^-- TxtLegendInterfaceTemplate
+InterfaceTemplate ^--- TknLegendInterfaceTemplate
+InterfaceTemplate ^-- ImgLegendInterfaceTemplate
+InterfaceTemplate ^--- MapInsertInterfaceTemplate
+
+TxtLegendInterfaceTemplate ^-- TknTxtLegendWidget
+TknLegendInterfaceTemplate ^-- TknLegendWgt
+ImgLegendInterfaceTemplate ^-- ImgLegendWgt
+MapInsertInterfaceTemplate ^-- MapInsertWgt
+
+TknTxtLegendWidget --o LegendWidgetUI
+TknLegendWgt --o LegendWidgetUI
+ImgLegendWgt --o LegendWidgetUI
+MapInsertWgt --o LegendWidgetUI
+
+'LegendWidgetUI o-- TknTxtLegendWidget
+'LegendWidgetUI o-- TknLegendWgt
+'LegendWidgetUI o-- ImgLegendWgt
+'LegendWidgetUI o-- MapInsertWgt
+
+note as n1 #Pink
+ui->editBut
+вызывает
+legend_editToken()
+<b>перемещено в</b>
+<b>LegendWidgetUI</b>
+endnote
+'n1 --- TknTxtLegendWidget
+TknTxtLegendWidget -- n1
+
+@enduml

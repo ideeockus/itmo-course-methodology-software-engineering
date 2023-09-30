@@ -1,0 +1,46 @@
+@startuml
+'top to bottom direction
+left to right direction
+
+title общая диаграмма прецедентов
+
+actor пациент
+actor доктор
+actor стиратель
+actor техник
+actor "агент службы\nоповещения" as оповещатель
+actor оборудование
+actor менеджер
+
+rectangle "система Anamnesia"{
+    usecase "UC0: оформление заявки" as UC0
+    usecase "UC1: прохождение интервью" as UC1
+    usecase "UC2: построение карты\nвоспоминаний" as UC2
+    usecase "UC3: оповещение контактов" as UC3
+    usecase "UC4: стирание\nвоспоминаний" as UC4
+    usecase "UC5: подготовка к стирванию" as UC5
+    usecase "UC6: приёмка оборудования" as UC6
+    usecase "UC7: обслуживание оборудования" as UC7
+    usecase "UC8: просмотр статистики" as UC8
+}
+
+пациент --> UC0
+пациент ..> UC1
+доктор --> UC1
+доктор --> UC2
+стиратель --> UC4
+пациент ..> UC4
+оповещатель --> UC3
+
+UC2 <-- оборудование
+UC4 <-- оборудование
+
+стиратель --> UC5
+
+UC5 <-- техник
+UC6 <-- техник
+UC7 <-- техник
+
+UC8 <-- менеджер
+
+@enduml

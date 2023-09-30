@@ -1,0 +1,34 @@
+@startuml
+left to right direction
+
+title UC2: построение карты воспоминаний
+
+actor пациент
+actor доктор
+actor оборудование
+'actor "вещи пациента" as items
+
+usecase "посещение" as become
+usecase "детектирование активности мозга" as detection
+usecase "подключение оборудования" as connect
+usecase "отключение оборудования" as disconnect
+usecase "планирование стирания" as plan
+
+become .> connect
+connect .> detection
+detection .> disconnect
+disconnect .> plan
+
+
+пациент --> become
+доктор --> connect
+доктор .> detection
+
+доктор -> disconnect
+
+
+'detection <.. items
+detection <-- оборудование
+connect <.. оборудование
+disconnect <.. оборудование
+@enduml

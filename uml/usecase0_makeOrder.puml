@@ -1,0 +1,19 @@
+@startuml
+
+title UC0: Получение заявки
+
+split
+-[hidden]->
+    :пациент пришёл в регистратуру<
+split again
+-[hidden]->
+    start
+end split
+
+:зайти на сайт;
+:заполнить форму;
+
+stop
+floating note: **Постусловие**:\n  создана карточка пациента
+
+@enduml

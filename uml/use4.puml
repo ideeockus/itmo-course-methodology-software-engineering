@@ -1,0 +1,26 @@
+@startuml
+left to right direction
+
+title UC4: стирание воспоминаний
+
+actor пациент
+actor стиратели
+actor "служба поддержки" as help
+actor оборудование
+
+usecase "автоматическое стирание воспоминаний" as auto_rm
+usecase "ручное стирание воспоминаний" as man_rm
+usecase "подготовка к стиранию" as prepare
+usecase "условный сигнал" as signal
+
+стиратели --> prepare
+стиратели --> auto_rm
+prepare .> signal
+signal <-- пациент
+signal .> auto_rm
+auto_rm .> man_rm
+help --> man_rm
+auto_rm <.. оборудование
+man_rm <.. оборудование
+
+@enduml

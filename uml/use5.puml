@@ -1,0 +1,34 @@
+@startuml
+left to right direction
+
+title UC5: подготовка к стирванию
+
+actor техник
+actor стиратели
+actor "карточка оборудования" as card_t
+actor "карточка пациента" as card_p
+
+usecase "проверка оборудования" as tec_check
+usecase "проверка оборудования" as cln_check
+usecase "передача оборудования" as get_tools
+usecase "формирование бригады" as config
+usecase "собраться у машины" as get_car
+
+техник --> tec_check
+'стиратели --> cln_check
+
+tec_check .> get_tools
+'get_tools .> cln_check
+
+'card_p --> config
+config <-- card_p
+get_tools <.. card_t
+config .> get_tools
+
+стиратели --> get_car
+get_car .> cln_check
+'оборудование ..> tec_check
+'оборудование --> get_tools
+'оборудование ..> cln_check
+
+@enduml
