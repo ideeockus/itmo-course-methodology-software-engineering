@@ -1,4 +1,4 @@
-@startuml
+@startuml use0
 left to right direction
 
 title UC0: оформление заявки

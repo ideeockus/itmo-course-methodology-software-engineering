@@ -1,0 +1,144 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class ApplicationKt {
+  + main(): Unit
+  + module(Application): Unit
+}
+class ApplicationTest {
+  + testRoot(): Unit
+}
+class Build_gradle {
+  + main(String[]): Unit
+   h2_version: String
+   ktor_version: String
+   exposed_version: String
+   kotlin_version: String
+   logback_version: String
+}
+class DatabasesKt {
+  + configureDatabases(Application): Unit
+}
+class MonitoringKt {
+  + configureMonitoring(Application): Unit
+}
+class RequestsKt {
+  + createPatientCard(String, String, String, String): Int
+  + getTimeSlots(Int, String): HashMap<String, TimeSlotState>
+  + fillTimeSlot(String, String): Boolean
+   database: Database
+}
+class RoutingKt {
+  + getRandomString(Int): String
+  + configureRouting(Application): Unit
+  + genUserToken(): String
+}
+class SecurityKt {
+  + configureSecurity(Application): Unit
+}
+class SerializationKt {
+  + configureSerialization(Application): Unit
+}
+class Settings_gradle {
+  + main(String[]): Unit
+}
+enum TimeSlotState << enumeration >> {
+  + values(): TimeSlotState[]
+  + valueOf(String): TimeSlotState
+}
+class UserService {
+  + suspend  delete(Int): Unit
+  + suspend  update(Int, ExposedUser): Unit
+  + suspend  dbQuery(suspend () -> T): T
+  + suspend  read(Int): ExposedUser
+  + suspend  create(ExposedUser): Int
+}
+class Users {
+   primaryKey: PrimaryKey
+   name: Column<String>
+   id: Column<Int>
+   age: Column<Int>
+}
+entity data  AddFamiliarTransactionReq << data >> {
+   action: FamiliarAction
+   familiarId: Int
+   timestamp: Long
+}
+entity data  AddFamiliarTransactionResp << data >> {
+   status: Boolean
+}
+entity data  AddPatientFamiliarReq << data >> {
+   patientId: Int
+   familiar: PatientFamiliar
+}
+entity data  AddPatientFamiliarResp << data >> {
+   familiarId: Int
+}
+entity data  CreateRequestReq << data >> {
+   name: String
+   date: String
+   policyChecked: String
+   time: String
+   email: String
+   phone: String
+}
+entity data  CreateRequestResp << data >> {
+   userToken: String
+   cardId: Int
+}
+entity data  EditPatientCardReq << data >> {
+   patientId: Int
+   patientCard: PatientCard
+}
+entity data  EditPatientCardResp << data >> {
+   updatedPatientCard: PatientCard?
+}
+entity data  ExposedUser << data >> {
+   name: String
+   age: Int
+}
+entity data  FillTimeSlotReq << data >> {
+   doctorId: Int
+   date: String
+   time: String
+}
+entity data  FillTimeSlotResp << data >> {
+   status: Boolean
+}
+entity data  GetFamiliarTransactionHistoryReq << data >> {
+   familiarId: Int
+}
+entity data  GetFamiliarTransactionHistoryResp << data >> {
+   history: List<FamiliarTransaction>
+}
+entity data  GetPatientCardReq << data >> {
+   patientToken: String
+}
+entity data  GetPatientCardResp << data >> {
+   patientCard: PatientCard?
+}
+entity data  GetTimeSlotsReq << data >> {
+   doctorId: Int
+   date: String
+}
+entity data  GetTimeSlotsResp << data >> {
+   timeslots: HashMap<String, TimeSlotState>
+}
+class node18 as "package  com.anamnesia.repository.models" << package >>
+
+DatabasesKt                              -[#595959,dashed]->  UserService                             : "«create»"
+RoutingKt                                -[#595959,dashed]->  data  AddFamiliarTransactionResp        : "«create»"
+RoutingKt                                -[#595959,dashed]->  data  AddPatientFamiliarResp            : "«create»"
+RoutingKt                                -[#595959,dashed]->  data  CreateRequestResp                 : "«create»"
+RoutingKt                                -[#595959,dashed]->  data  EditPatientCardResp               : "«create»"
+RoutingKt                                -[#595959,dashed]->  data  FillTimeSlotResp                  : "«create»"
+RoutingKt                                -[#595959,dashed]->  data  GetFamiliarTransactionHistoryResp : "«create»"
+RoutingKt                                -[#595959,dashed]->  data  GetPatientCardResp                : "«create»"
+RoutingKt                                -[#595959,dashed]->  data  GetTimeSlotsResp                  : "«create»"
+UserService                              -[#595959,dashed]->  data  ExposedUser                       : "«create»"
+Users                                    +-[#820000,plain]-  UserService                             
+data  GetTimeSlotsResp                  "1" *-[#595959,plain]-> "timeslots\n*" TimeSlotState                           
+@enduml

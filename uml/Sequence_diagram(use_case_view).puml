@@ -1,0 +1,53 @@
+@startuml
+
+title Диаграмма последовательности: Информирование контакта пациента
+
+actor "Агент службы оповещения" as Agent
+participant "Система" as System
+actor "Контакт пациента" as Contact
+actor "Пациента" as Patient
+
+Agent -> System : Агент оповещения проверяет статус контакта
+activate Agent
+activate System
+System --> Agent : Предоставляет информацию о статусе контакта
+deactivate System
+Agent -> System : Агент оповещения открывает историю взаимодействий
+activate System
+System --> Agent : Предоставляет историю взаимодействий
+deactivate System
+Agent -> System : Агент оповещения выбирает действие
+activate System
+' Agent -> Contact : Производится попытка связаться с контактом
+
+
+alt Попытка связи - Звонок
+    System --> Agent : Номер телефона 
+    Agent -> Contact : Звонок
+
+else Попытка связи - Посещение
+    System --> Agent : Адрес работы 
+    Agent -> Contact : Посещение
+
+else Попытка связи - Звонок работодателю
+    System --> Agent : Номер телефона работодателя
+    Agent -> Contact : Звонок работодателю
+
+else Попытка связи - Посещение рабочего места
+    System --> Agent : Место работы
+    deactivate System
+    Agent -> Contact : Посещение рабочего места
+else Не осталось вариантов связи 
+    ' Agent -> System : Выбор связи с пациентом
+    Agent -> System : Согласование самостоятельного оповещения контакта
+    System -> Patient : Запись в карту клиента о самостоятельном оповещении контакта
+end
+
+Agent -> System : Агент оповещения добавляет действие в историю
+activate System
+System --> Agent : Подтверждение добавления действия
+deactivate System
+deactivate Agent
+' Agent -> Contact : Контакт информирован
+
+@enduml
