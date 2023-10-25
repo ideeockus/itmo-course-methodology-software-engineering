@@ -3,7 +3,7 @@
 title Диаграмма последовательности: Информирование контакта пациента
 
 participant "UI" as UI
-participant "Backend" as Backend
+participant "AP Logic" as Backend
 database "База данных (DB)" as DB
 
 
@@ -12,46 +12,44 @@ UI -> Backend : Запрос на информацию о контакте
 activate Backend
 Backend -> DB : Запрос к базе данных
 activate DB
+ 
 DB --> Backend : Результат запроса (Информация о контакте)
 deactivate DB
 Backend --> UI : Ответ с информацией о контакте
 deactivate Backend
 
-
-UI -> Backend : Запрос истории взаимодействия 
-activate Backend
-Backend -> DB : Запрос к базе данных
-activate DB
-DB --> Backend : Результат запроса (История взаимодействия)
-deactivate DB
-Backend --> UI : Ответ с историей взаимодействия 
-deactivate Backend
-
-UI -> Backend : Запрос на оповещение контакта
-activate Backend
-alt Попытка связи - Звонок/Посещение/Посещение рабочего места
-    Backend -> UI : Соответствующая информация о контакте
-else Не осталось вариантов связи 
-    Backend -> DB :  Запись в карту клиента о самостоятельном оповещении контакта
+opt Контакт существует
+    UI -> Backend : Запрос истории взаимодействия 
+    activate Backend
+    Backend -> DB : Запрос к базе данных
     activate DB
-    deactivate DB  
-end 
-deactivate Backend
+    DB --> Backend : Результат запроса (История взаимодействия)
+    deactivate DB
+    Backend --> UI : Ответ с историей взаимодействия 
+    deactivate Backend
 
+    opt Информирование не проведено
+        UI -> Backend : Запрос на оповещение контакта
+        activate Backend
+        alt Попытка связи - Звонок/Посещение/Посещение рабочего места
+            Backend -> UI : Соответствующая информация о контакте
+        else Не осталось вариантов связи 
+            Backend -> DB :  Запись в карту клиента о самостоятельном оповещении контакта
+            activate DB
+            deactivate DB  
+        end 
+        deactivate Backend
 
+        UI -> Backend : Добавление действия в историю 
+        activate Backend
+        Backend -> DB : Запрос к базе данных
+        activate DB
+        DB --> Backend : Результат запроса (Подтверждение)
+        deactivate DB
+        Backend --> UI : Подтверждение добавления действия
+        deactivate Backend
 
-
-
-
-
-UI -> Backend : Добавление действия в историю 
-activate Backend
-Backend -> DB : Запрос к базе данных
-activate DB
-DB --> Backend : Результат запроса (Подтверждение)
-deactivate DB
-Backend --> UI : Подтверждение добавления действия
-deactivate Backend
-
-deactivate UI
+        deactivate UI
+    end 
+end
 @enduml

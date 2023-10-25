@@ -1,0 +1,74 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+entity  AddFamiliarTransactionReq {
+   action: FamiliarAction
+   familiarId: Int
+   timestamp: Long
+}
+entity  AddFamiliarTransactionResp  {
+   status: Boolean
+}
+entity  AddPatientFamiliarReq  {
+   patientId: Int
+   familiar: PatientFamiliar
+}
+entity  AddPatientFamiliarResp  {
+   familiarId: Int
+}
+entity  CreateRequestReq {
+   name: String
+   date: String
+   policyChecked: String
+   time: String
+   email: String
+   phone: String
+}
+entity  CreateRequestResp  {
+   userToken: String
+   cardId: Int
+}
+entity  EditPatientCardReq {
+   patientId: Int
+   patientCard: PatientCard
+}
+entity  EditPatientCardResp {
+   updatedPatientCard: PatientCard?
+}
+entity  ExposedUser {
+   name: String
+   age: Int
+}
+entity  FillTimeSlotReq  {
+   doctorId: Int
+   date: String
+   time: String
+}
+entity  FillTimeSlotResp  {
+   status: Boolean
+}
+entity  GetFamiliarTransactionHistoryReq{
+   familiarId: Int
+}
+entity  GetFamiliarTransactionHistoryResp {
+   history: List<FamiliarTransaction>
+}
+entity  GetPatientCardReq  {
+   patientToken: String
+}
+entity  GetPatientCardResp {
+   patientCard: PatientCard?
+}
+entity  GetTimeSlotsReq {
+   doctorId: Int
+   date: String
+}
+entity  GetTimeSlotsResp  {
+   timeslots: HashMap<String, TimeSlotState>
+}
+class node18 as "package  com.anamnesia.repository.models" << package >>
+
+@enduml

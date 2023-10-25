@@ -1,0 +1,81 @@
+@startuml
+
+title Диаграмма последовательности: Информирование контакта пациента
+
+participant "UI" as UI
+participant "Backend" as Backend
+participant "DBController" as DBController
+database "База данных (DB)" as DB
+
+UI -> Backend : GET /patient/contact/:patient_id
+note over UI: Запрос на информацию о контакте
+activate Backend
+Backend -> DBController : Вызов getContact(patient_id)
+activate DBController
+DBController -> DB : Запрос к базе данных
+activate DB
+note over DB: SQL: SELECT * FROM Contacts WHERE patient_id = :patient_id
+DB --> DBController : Результат запроса (Информация о контакте)
+deactivate DB
+DBController --> Backend : Информация о контакте
+deactivate DBController
+note over Backend: Конвертация в JSON и отправка
+Backend --> UI: http response
+deactivate Backend
+
+
+opt Контакт существует
+    UI -> Backend : GET /patient/contact/history/:patient_id&contact_id
+    note over UI: Запрос на информацию о контакте
+    activate Backend
+    Backend -> DBController : Вызов getContactHistory(patient_id)
+    activate DBController
+    DBController -> DB : Запрос к базе данных
+    activate DB
+    note over DB: SQL: SELECT * FROM Contacts_hi WHERE patient_id = :patient_id and contact_id = :contact_id
+    DB --> DBController : Результат запроса (История взаимодействия)
+    deactivate DB
+    DBController --> Backend : История взаимодействия
+    note over Backend: Конвертация в JSON и отправка
+    deactivate DBController
+    Backend --> UI: http response
+    deactivate Backend
+
+    opt Информирование не проведено
+        UI -> Backend : POST /patient/contact/notify
+        activate Backend
+
+        alt Попытка связи - Звонок/Посещение/Посещение рабочего места
+            Backend -> UI : http response
+            note over UI: Информация о контакте
+        else Не осталось вариантов связи
+            Backend -> DBController : recordSelfNotification(patient_id)
+            activate DBController
+            DBController -> DB : Запрос к базе данных
+            activate DB
+            note over DB: SQL: INSERT INTO Patient(message) VALUES (message) WHERE patient_id = :patient_id
+            DB --> DBController : Результат запроса (Подтверждение)
+            deactivate DB
+            deactivate DBController
+        end
+
+        UI -> Backend : POST /patient/contact/history
+        activate Backend
+        Backend -> DBController : insertContactHistory(contact_id, patient_id, message)
+        activate DBController
+        DBController -> DB : Запрос к базе данных
+        activate DB
+        note over DB: SQL: INSERT INTO Contacts_hi(message) VALUES (message)  WHERE patient_id = :patient_id and contact_id = :contact_id
+        DB --> DBController : Результат запроса (Подтверждение)
+        deactivate DB
+        deactivate DBController
+        Backend --> UI: http response
+        note over UI : Подтверждение добавления действия
+        deactivate Backend
+
+    end
+end
+Backend -> UI : 200 OK
+note over UI: Оповещение контакта успешно выполнено
+
+@enduml
