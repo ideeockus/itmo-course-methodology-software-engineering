@@ -1,7 +1,9 @@
 @startuml
 
-!theme plain
-top to bottom direction
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
 skinparam linetype ortho
 
 entity  AddFamiliarTransactionReq {
@@ -70,5 +72,7 @@ entity  GetTimeSlotsResp  {
    timeslots: HashMap<String, TimeSlotState>
 }
 class node18 as "package  com.anamnesia.repository.models" << package >>
+
+
 
 @enduml

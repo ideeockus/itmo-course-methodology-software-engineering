@@ -1,0 +1,32 @@
+@startuml
+
+title UC2: Построение карты воспоминаний (второе посещение)
+|UI|
+start
+-Press\n"Подключить оборудование"\n(POST equipment/connect {ip_address})
+|Backand|
+-Создание подключения\nсетевого оборудования\n(new connectEquipment(ip_address))
+-Создание карты воспоминаний\n(new memoryСard(client.id))
+-Сохранение карты воспоминаний\n(memoryСard.save())
+|DBController|
+-Создание карты воспоминаний пациента\n(INSERT INTO MemoryСard(client_id) VALUES memoryСard.value())
+
+|UI|
+repeat
+    -Добавление нового воспоминания\n(POST /patient/memory {description})
+    |Backand|
+    -Получение снимка\n(Snapshot = connectionEquipment.getSnapshot())
+    -Добавление нового воспоминания в карту\n(memoryСard.addMemory(description, Snapshot))
+    |DBController|
+    -Добавление нового воспоминания в базу\n(INSERT INTO Memory VALUES (memoryСard.id, description, Snapshot))
+    |Backand|
+    -Передача карты для отрисовки\n(memoryСard.draw())
+    |UI|
+    -Отрисовка обновлённой карты\n(http request) 
+repeat while (ещё есть\nвопросы\nили вещи?) is (да) not (нет)
+
+|Backand|
+-Закрыть подключение\n(connectionEquipment.close())
+stop
+@enduml
+
