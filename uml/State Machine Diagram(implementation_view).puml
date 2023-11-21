@@ -1,0 +1,32 @@
+@startuml
+
+[*] --> Ready : POST /procedure
+Ready : вход / new procedure(id_client)     
+Ready --> EquipmentSetup: POST /procedure/equipment
+
+EquipmentSetup : вход / connectEquipment(ip_address)    
+EquipmentSetup --> AutomaticCleaning : POST /procedure/start 
+ 
+AutomaticCleaning : вход / openMemoryMap(id_client)
+AutomaticCleaning : пока [memoriesInMapCount > 0] /\ntransferDataToEquipment(id_memories)
+
+AutomaticCleaning --> SuccessfulCompletion : memoriesInMapCount == 0
+SuccessfulCompletion : вход / closeMemoryMap(id_client)
+SuccessfulCompletion : вход / recordInCart(id_client, message:"Успешное завершение")
+SuccessfulCompletion : вход / disconnectEquipment()
+SuccessfulCompletion --> [*]
+
+AutomaticCleaning --> ManualIntervention : Exception
+ManualIntervention --> ManualCleaning : POST /procedure/clean
+ManualIntervention : вход / request ErrorMessage
+ManualCleaning : вход / transferCustomDataToEquipment(id_memories,data)
+ManualCleaning --> AutomaticCleaning : memoriesInMapCount != 0
+
+ManualCleaning --> SuccessfulCompletion : memoriesInMapCount == 0
+ManualCleaning --> FailedCompletion : Exception
+FailedCompletion : вход / closeMemoryMap(id_client)
+FailedCompletion : вход / recordInCart(id_client, message:"Неудачное завершение")
+FailedCompletion : вход / disconnectEquipment()
+FailedCompletion --> [*]
+
+@enduml
