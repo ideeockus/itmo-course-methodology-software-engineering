@@ -7,5 +7,8 @@ data class Patient(
     val name: String,
     val phone: String,
     val email: String?,
-    val appointmentDate: LocalDateTime
+    val appointmentDate: LocalDateTime,
+
+    val memoryScan: MemoryScan?,
+    val erasureSession: ErasureSession?,
 )

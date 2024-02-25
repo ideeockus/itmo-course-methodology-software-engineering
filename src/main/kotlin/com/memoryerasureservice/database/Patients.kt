@@ -8,4 +8,7 @@ object Patients : IntIdTable() {
     val phone = varchar("phone", 20)
     val email = varchar("email", 255).nullable()
     val appointmentDate = datetime("appointment_date")
+
+    val memoryScanId = uuid("memory_scan_id").nullable()
+    val erasureSessionId = uuid("erasure_session_id").nullable()
 }

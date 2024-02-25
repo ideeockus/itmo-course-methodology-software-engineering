@@ -65,12 +65,27 @@ class PatientService {
         getPatientById(id)
     }
 
-    private fun toPatient(row: ResultRow): Patient =
-        Patient(
+    private fun toPatient(row: ResultRow): Patient {
+        val memoryScanId = row[Patients.memoryScanId]
+        val erasureSessionId = row[Patients.erasureSessionId]
+
+        val memoryScan = memoryScanId?.let { id ->
+            getMemoryScanById(id)
+        }
+
+        val erasureSession = erasureSessionId?.let { id ->
+            getErasureSessionById(id)
+        }
+
+        return Patient(
             id = row[Patients.id].value,
             name = row[Patients.name],
             phone = row[Patients.phone],
             email = row[Patients.email],
-            appointmentDate = row[Patients.appointmentDate]
+            appointmentDate = row[Patients.appointmentDate],
+
+            memoryScan = memoryScan,
+            erasureSession = erasureSession,
         )
+    }
 }

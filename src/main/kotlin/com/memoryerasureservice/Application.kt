@@ -2,10 +2,7 @@ package com.memoryerasureservice
 
 import com.memoryerasureservice.api.*
 import com.memoryerasureservice.database.DatabaseFactory
-import com.memoryerasureservice.services.ContactService
-import com.memoryerasureservice.services.DoctorService
-import com.memoryerasureservice.services.MemoryScanService
-import com.memoryerasureservice.services.PatientService
+import com.memoryerasureservice.services.*
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.serialization.kotlinx.json.*
@@ -34,6 +31,12 @@ fun main() {
 
         val contactService = ContactService()
         registerContactRoutes(contactService)
+
+        val erasureService = ErasureService()
+        registerErasureRoutes(erasureService)
+
+        val equipmentService = EquipmentService()
+        registerEquipmentRoutes(equipmentService)
 
     }.start(wait = true)
 }
