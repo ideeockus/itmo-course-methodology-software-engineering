@@ -2,6 +2,8 @@ package com.memoryerasureservice
 
 import com.memoryerasureservice.api.*
 import com.memoryerasureservice.database.DatabaseFactory
+import com.memoryerasureservice.services.DoctorService
+import com.memoryerasureservice.services.MemoryScanService
 import com.memoryerasureservice.services.PatientService
 import io.ktor.http.*
 import io.ktor.serialization.*
@@ -20,9 +22,14 @@ fun main() {
             json()
         }
         DatabaseFactory.init()
+
         routing {
             patientApi(PatientService())
-
+            doctorApi(DoctorService())
         }
+
+        val memoryScanService = MemoryScanService()
+        registerMemoryScanRoutes(memoryScanService)
+
     }.start(wait = true)
 }
