@@ -2,6 +2,7 @@ package com.memoryerasureservice
 
 import com.memoryerasureservice.api.*
 import com.memoryerasureservice.database.DatabaseFactory
+import com.memoryerasureservice.services.ContactService
 import com.memoryerasureservice.services.DoctorService
 import com.memoryerasureservice.services.MemoryScanService
 import com.memoryerasureservice.services.PatientService
@@ -30,6 +31,9 @@ fun main() {
 
         val memoryScanService = MemoryScanService()
         registerMemoryScanRoutes(memoryScanService)
+
+        val contactService = ContactService()
+        registerContactRoutes(contactService)
 
     }.start(wait = true)
 }
