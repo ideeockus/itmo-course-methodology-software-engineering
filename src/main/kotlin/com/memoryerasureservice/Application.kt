@@ -2,7 +2,7 @@ package com.memoryerasureservice
 
 import com.memoryerasureservice.api.*
 import com.memoryerasureservice.database.DatabaseFactory
-import com.memoryerasureservice.service.PatientService
+import com.memoryerasureservice.services.PatientService
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.serialization.kotlinx.json.*
@@ -22,6 +22,7 @@ fun main() {
         DatabaseFactory.init()
         routing {
             patientApi(PatientService())
+
         }
     }.start(wait = true)
 }

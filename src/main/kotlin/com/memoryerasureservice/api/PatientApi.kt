@@ -1,6 +1,7 @@
 package com.memoryerasureservice.api
 
-import com.memoryerasureservice.service.PatientService
+import com.memoryerasureservice.model.Patient
+import com.memoryerasureservice.services.PatientService
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -14,6 +15,37 @@ fun Route.patientApi(patientService: PatientService) {
             val request = call.receive<ApplyRequest>()
             val patient = patientService.applyForService(request)
             call.respond(HttpStatusCode.Created, patient)
+        }
+
+        route("/patients") {
+            get("/{id}") {
+                val id = call.parameters["id"]?.toIntOrNull()
+                if (id == null) {
+                    call.respond(HttpStatusCode.BadRequest, "Invalid patient ID")
+                    return@get
+                }
+                val patient = patientService.getPatientById(id)
+                if (patient == null) {
+                    call.respond(HttpStatusCode.NotFound, "Patient not found")
+                } else {
+                    call.respond(patient)
+                }
+            }
+
+            post("/{id}/update") {
+                val id = call.parameters["id"]?.toIntOrNull()
+                if (id == null) {
+                    call.respond(HttpStatusCode.BadRequest, "Invalid patient ID")
+                    return@post
+                }
+                val patientData = call.receive<Patient>()
+                val updatedPatient = patientService.updatePatient(id, patientData)
+                if (updatedPatient == null) {
+                    call.respond(HttpStatusCode.NotFound, "Patient not found")
+                } else {
+                    call.respond(HttpStatusCode.OK, updatedPatient)
+                }
+            }
         }
     }
 }

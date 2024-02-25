@@ -1,5 +1,4 @@
-// Файл: src/main/kotlin/com/memoryerasureservice/service/PatientService.kt
-package com.memoryerasureservice.service
+package com.memoryerasureservice.services
 
 import com.memoryerasureservice.api.ApplyRequest
 import com.memoryerasureservice.database.Patients
@@ -9,6 +8,7 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
 import java.time.LocalDateTime
 
 class PatientService {
@@ -42,11 +42,27 @@ class PatientService {
         return getPatientById(patientId.value)
     }
 
-    private fun getPatientById(id: Int): Patient = transaction {
+    fun getPatientById(id: Int): Patient = transaction {
         // Получение пациента по ID
         Patients.select { Patients.id eq id }
             .map { toPatient(it) }
             .first()
+    }
+
+    fun updatePatient(id: Int, patientData: Patient): Patient? = transaction {
+        // Проверка, существует ли пациент с данным ID
+        Patients.select { Patients.id eq id }
+            .singleOrNull() ?: return@transaction null
+
+        // Обновление данных пациента
+        Patients.update({ Patients.id eq id }) {
+            it[name] = patientData.name
+            it[phone] = patientData.phone
+            it[email] = patientData.email
+        }
+
+        // Возвращение обновленного пациента
+        getPatientById(id)
     }
 
     private fun toPatient(row: ResultRow): Patient =
