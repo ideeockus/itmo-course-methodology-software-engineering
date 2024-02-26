@@ -38,5 +38,8 @@ fun main() {
         val equipmentService = EquipmentService()
         registerEquipmentRoutes(equipmentService)
 
+        val statisticsService = StatisticsService()
+        registerStatisticsRoutes(statisticsService)
+
     }.start(wait = true)
 }

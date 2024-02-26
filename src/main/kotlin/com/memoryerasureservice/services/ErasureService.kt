@@ -1,10 +1,12 @@
 package com.memoryerasureservice.services
 
+import com.memoryerasureservice.api.ServiceLocator
 import com.memoryerasureservice.database.ErasureSessions
 import com.memoryerasureservice.database.ErasureTeam
 import com.memoryerasureservice.database.toErasureTeamMember
 import com.memoryerasureservice.model.ErasureSession
 import com.memoryerasureservice.model.ErasureTeamMember
+import com.memoryerasureservice.utils.StatisticsKeys
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.or
@@ -42,6 +44,8 @@ class ErasureService {
     }
 
     fun completeErasureSession(sessionId: UUID) = transaction {
+        ServiceLocator.statisticsService.incrementStatistic(StatisticsKeys.PROCEDURES_COMPLETED)
+
         ErasureSessions.update({ ErasureSessions.id eq sessionId }) {
             it[endTime] = LocalDateTime.now()
             it[status] = "completed"

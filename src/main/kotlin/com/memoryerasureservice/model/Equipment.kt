@@ -1,8 +1,14 @@
 package com.memoryerasureservice.model
 
-data class Equipment(
+import java.time.LocalDate
+
+data class EquipmentData(
     val id: Int,
     val name: String,
     val type: String,
-    val status: String
+    val status: String,
+    val location: String?,
+    val maintenanceDate: LocalDate?,
+    val serviceLife: Int?
 )
+
