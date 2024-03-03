@@ -1,1 +1,1 @@
-rootProject.name = "com.example.anamnesia"
+rootProject.name = "com.memoryerasureservice"

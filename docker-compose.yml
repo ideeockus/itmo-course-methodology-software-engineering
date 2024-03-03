@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  app:
+    build: .
+    ports:
+      - "8890:8890"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5434
+      DB_NAME: mpi_db
+      DB_USER: mpi_user
+      DB_PASSWORD: pass123
+
+  db:
+    image: postgres:latest
+    ports:
+      - "5434:5432"  # Проброс порта из контейнера на хост-машину
+    environment:
+      POSTGRES_USER: mpi_user
+      POSTGRES_PASSWORD: pass123
+      POSTGRES_DB: mpi_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Подключение тома для сохранения данных БД
+
+volumes:
+  postgres_data:  # Определение тома для данных PostgreSQL

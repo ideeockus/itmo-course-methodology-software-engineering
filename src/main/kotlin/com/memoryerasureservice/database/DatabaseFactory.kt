@@ -32,11 +32,18 @@ object DatabaseFactory {
     }
 
     private fun hikari(): HikariDataSource {
+        val dbHost = System.getenv("DB_HOST") ?: "localhost"
+        val dbPort = System.getenv("DB_PORT") ?: "5434"
+        val dbName = System.getenv("DB_NAME") ?: "mpi_db"
+        val dbUser = System.getenv("DB_USER") ?: "mpi_user"
+        val dbPassword = System.getenv("DB_PASSWORD") ?: "pass123"
+
+
         val config = HikariConfig()
         config.driverClassName = "org.postgresql.Driver"
-        config.jdbcUrl = "jdbc:postgresql://localhost:5434/mpi_db"
-        config.username = "mpi_user"
-        config.password = "pass123"
+        config.jdbcUrl = "jdbc:postgresql://$dbHost:$dbPort/$dbName"
+        config.username = dbUser
+        config.password = dbPassword
         config.maximumPoolSize = 3
         config.isAutoCommit = false
         config.transactionIsolation = "TRANSACTION_REPEATABLE_READ"

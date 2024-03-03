@@ -22,7 +22,7 @@ import java.time.ZoneOffset
 
 
 fun Application.configureRouting() {
-    
+
     routing {
 //        openAPI(path="openapi", swaggerFile = "openapi/documentation.yaml")
         get("/") {

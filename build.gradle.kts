@@ -80,7 +80,15 @@ dependencies {
     implementation("io.ktor:ktor-server-swagger:$ktor_version")
 
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+//    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    // build.gradle.kts для Kotlin DSL
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.4.32")
+    testImplementation("io.mockk:mockk:1.10.6")
+    testImplementation("org.jetbrains.exposed:exposed-core:0.31.1")
+    testImplementation("org.jetbrains.exposed:exposed-dao:0.31.1")
+    testImplementation("org.jetbrains.exposed:exposed-jdbc:0.31.1")
+    testImplementation("com.h2database:h2:1.4.200") // Используем H2 для тестовой БД
+
 }
 
 application {
