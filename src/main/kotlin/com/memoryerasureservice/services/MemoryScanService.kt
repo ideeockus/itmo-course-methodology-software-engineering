@@ -24,7 +24,7 @@ fun getMemoryScanById(id: UUID): MemoryScan? = transaction {
     MemoryScans.select { MemoryScans.id eq id }
         .mapNotNull { row ->
             MemoryScan(
-                id = row[MemoryScans.id],
+                id = row[MemoryScans.id].value,
                 patientId = row[MemoryScans.patientId].value,
                 dateTime = row[MemoryScans.dateTime],
                 memoryItem = row[MemoryScans.memoryItem],

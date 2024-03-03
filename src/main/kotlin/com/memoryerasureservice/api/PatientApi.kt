@@ -1,6 +1,8 @@
 package com.memoryerasureservice.api
 
+import com.memoryerasureservice.model.Familiar
 import com.memoryerasureservice.model.Patient
+import com.memoryerasureservice.model.PatientState
 import com.memoryerasureservice.services.PatientService
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -8,6 +10,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
+import java.util.UUID
 
 fun Route.patientApi(patientService: PatientService) {
     route("/patients") {
@@ -17,7 +20,14 @@ fun Route.patientApi(patientService: PatientService) {
             call.respond(HttpStatusCode.Created, patient)
         }
 
-        route("/patients") {
+        post("/create_appointment") {
+            val request = call.receive<CreatePatientAppointment>()
+            val patient = patientService.createAppointment(request)
+            println("create_appointment: patient $patient")
+            call.respond(HttpStatusCode.Created, patient)
+        }
+
+//        route("/patients") {
             get("/{id}") {
                 val id = call.parameters["id"]?.toIntOrNull()
                 if (id == null) {
@@ -32,7 +42,14 @@ fun Route.patientApi(patientService: PatientService) {
                 }
             }
 
-            post("/{id}/update") {
+            post("/by_token") {
+                val request = call.receive<GetPatientByToken>()
+                val patientToken = UUID.fromString(request.patientToken)
+                val patient = patientService.getPatientByToken(patientToken)
+                call.respond(HttpStatusCode.Created, patient)
+            }
+
+            post("/edit_patient_card") {
                 val id = call.parameters["id"]?.toIntOrNull()
                 if (id == null) {
                     call.respond(HttpStatusCode.BadRequest, "Invalid patient ID")
@@ -46,9 +63,70 @@ fun Route.patientApi(patientService: PatientService) {
                     call.respond(HttpStatusCode.OK, updatedPatient)
                 }
             }
-        }
+
+            get("/edit_patient_card") {
+                val request = call.receive<UpdatePatientReq>()
+                var patient = patientService.getPatientById(request.id)
+
+                patient.name = request.name
+                patient.phone = request.phone
+                patient.email = request.email
+                patient.address = request.address
+                patient.age = request.age
+                patient.state = request.state
+
+                val updatedPatient = patientService.updatePatient(patient.id, patient)
+                if (updatedPatient == null) {
+                    call.respond(HttpStatusCode.NotFound, "Patient not found")
+                } else {
+                    call.respond(HttpStatusCode.OK, updatedPatient)
+                }
+            }
+//        }
     }
 }
 
 @Serializable
-data class ApplyRequest(val name: String, val phone: String, val email: String?, val appointmentDate: String)
+data class ApplyRequest(
+    val name: String,
+    val phone: String,
+    val email: String?,
+    val appointmentDate: String
+)
+
+@Serializable
+data class CreatePatientAppointment(
+    val name: String,
+    val phone: String,
+    val email: String?,
+    val appointmentDate: String,
+    val appointmentTime: String,
+    val policyChecked: Boolean,
+)
+
+@Serializable
+data class GetPatientByToken(
+    val patientToken: String,
+)
+
+@Serializable
+data class UpdatePatientReq(
+    val id: Int,
+    val name: String,
+    val phone: String,
+    val email: String?,
+    val age: Int,
+    val address: String?,
+
+//    val familiars: List<Familiar>,
+    val state: PatientState,
+)
+
+/*
+*
+* name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      time: checked_time_slots[0].innerHTML,
+      date: date,
+* */

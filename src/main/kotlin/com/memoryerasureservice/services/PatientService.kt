@@ -1,8 +1,11 @@
 package com.memoryerasureservice.services
 
+import FamiliarService
 import com.memoryerasureservice.api.ApplyRequest
+import com.memoryerasureservice.api.CreatePatientAppointment
 import com.memoryerasureservice.database.Patients
 import com.memoryerasureservice.model.Patient
+import com.memoryerasureservice.model.PatientState
 import com.memoryerasureservice.utils.parseLocalDateTimeFromString
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
@@ -10,6 +13,8 @@ import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.UUID
 
 class PatientService {
 
@@ -42,9 +47,34 @@ class PatientService {
         return getPatientById(patientId.value)
     }
 
+    fun createAppointment(req: CreatePatientAppointment): Patient {
+        val patientId = transaction {
+            val appointmentDateTime = req.appointmentDate + req.appointmentTime
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+            val dateTime = LocalDateTime.parse(appointmentDateTime.trim(), formatter)
+
+            Patients.insert { row ->
+                row[Patients.name] = req.name
+                row[Patients.phone] = req.phone
+                row[Patients.email] = req.email
+                row[Patients.appointmentDate] = dateTime
+                row[Patients.userToken] = UUID.randomUUID()
+                row[Patients.state] = PatientState.Stage1
+            } get Patients.id
+        }
+
+        return getPatientById(patientId.value)
+    }
+
     fun getPatientById(id: Int): Patient = transaction {
         // Получение пациента по ID
         Patients.select { Patients.id eq id }
+            .map { toPatient(it) }
+            .first()
+    }
+
+    fun getPatientByToken(id: UUID): Patient = transaction {
+        Patients.select { Patients.userToken eq id }
             .map { toPatient(it) }
             .first()
     }
@@ -77,6 +107,10 @@ class PatientService {
             getErasureSessionById(id)
         }
 
+        val patientFamiliars = row[Patients.id].let { id ->
+            FamiliarService().getFamiliarsForPatient(id.value)
+        }
+
         return Patient(
             id = row[Patients.id].value,
             name = row[Patients.name],
@@ -84,8 +118,15 @@ class PatientService {
             email = row[Patients.email],
             appointmentDate = row[Patients.appointmentDate],
 
+            age = row[Patients.age],
+            address = row[Patients.address],
+
             memoryScan = memoryScan,
             erasureSession = erasureSession,
+
+            state = row[Patients.state],
+            familiars = patientFamiliars,
+            userToken = row[Patients.userToken]
         )
     }
 }

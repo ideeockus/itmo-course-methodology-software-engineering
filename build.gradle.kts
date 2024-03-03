@@ -77,6 +77,7 @@ dependencies {
 
     implementation("ch.qos.logback:logback-classic:1.2.3")
     testImplementation("io.ktor:ktor-server-tests:1.5.4")
+    implementation("io.ktor:ktor-server-swagger:$ktor_version")
 
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")

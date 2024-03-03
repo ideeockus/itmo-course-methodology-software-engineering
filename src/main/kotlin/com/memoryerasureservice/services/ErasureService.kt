@@ -64,7 +64,7 @@ fun getErasureSessionById(id: UUID): ErasureSession? = transaction {
     ErasureSessions.select { ErasureSessions.id eq id }
         .mapNotNull { row ->
             ErasureSession(
-                id = row[ErasureSessions.id],
+                id = row[ErasureSessions.id].value,
                 patientId = row[ErasureSessions.patientId].value,
                 startTime = row[ErasureSessions.startTime],
                 endTime = row[ErasureSessions.endTime],
