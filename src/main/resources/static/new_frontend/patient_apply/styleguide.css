@@ -1,0 +1,30 @@
+:root {
+  --black: rgba(26, 32, 44, 1);
+  --white: rgba(255, 255, 255, 1);
+  --grey-300: rgba(207, 217, 224, 1);
+  --grey-900: rgba(17, 27, 43, 1);
+  --grey-700: rgba(65, 77, 99, 1);
+  --red-600: rgba(189, 0, 42, 1);
+  --grey-500: rgba(103, 114, 138, 1);
+  --grey-200: rgba(231, 235, 238, 1);
+  --blue-600: rgba(0, 89, 200, 1);
+  --blue-700: rgba(0, 65, 171, 1);
+  --paragraph-medium-font-family: "SF Pro Text", Helvetica;
+  --paragraph-medium-font-weight: 500;
+  --paragraph-medium-font-size: 14px;
+  --paragraph-medium-letter-spacing: -0.15399999916553497px;
+  --paragraph-medium-line-height: 20px;
+  --paragraph-medium-font-style: normal;
+  --paragraph-regular-font-family: "SF Pro Text", Helvetica;
+  --paragraph-regular-font-weight: 400;
+  --paragraph-regular-font-size: 14px;
+  --paragraph-regular-letter-spacing: -0.15399999916553497px;
+  --paragraph-regular-line-height: 20px;
+  --paragraph-regular-font-style: normal;
+  --paragraph-normal-font-family: "SF Pro Text", Helvetica;
+  --paragraph-normal-font-weight: 400;
+  --paragraph-normal-font-size: 14px;
+  --paragraph-normal-letter-spacing: -0.15399999916553497px;
+  --paragraph-normal-line-height: 20px;
+  --paragraph-normal-font-style: normal;
+}

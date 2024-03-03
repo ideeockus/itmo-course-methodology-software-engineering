@@ -1,0 +1,201 @@
+html,
+body {
+	min-height: 100%;
+	background-color: #7F7F7F;
+}
+
+body,
+div,
+form,
+input,
+select,
+p {
+	padding: 0;
+	margin: 0;
+	outline: none;
+	font-family: Roboto, Arial, sans-serif;
+	font-size: 16px;
+	color: #eee;
+}
+
+h1,
+h2 {
+	text-transform: uppercase;
+	font-weight: 400;
+}
+
+h2 {
+	margin: 0 0 0 8px;
+}
+
+.main-block {
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	padding: 25px;
+	/* background: rgba(0, 0, 0, 0.5); */
+	box-sizing: border-box;
+}
+
+#dateCell
+{
+	text-align: center;
+	border-spacing: 0px;
+}
+
+#dateOfTimeslots
+{
+	height: 100%;
+	margin: auto;
+	color: black;
+	border: none;
+	/* width: 100%; */
+	padding: 0;
+	display: block;
+	margin-bottom: auto;
+	height: inherit;
+}
+
+table
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	border-spacing: 8px;
+}
+
+.left-part,
+form {
+	display: table-cell;
+	vertical-align:top;
+
+	padding: 25px;
+	box-sizing: border-box;
+	width: 50%;
+}
+.left-part
+{
+	padding-left: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+th.free:hover
+{
+	background-color: #a5a5a5;
+}
+
+th.checked
+{
+	background-color: #26A9E0;
+}
+
+th.full
+{
+	background-color: #d9d9d900;
+}
+
+th
+{
+	border-collapse: separate;
+	background-color: #D9D9D9;
+
+	/* border-spacing: 8px; */
+	color: black;
+}
+
+.left-part
+{
+	height: 100%;
+}
+
+.fa-brain {
+	font-size: 12em;
+}
+
+form {
+	background: rgba(0, 0, 0, 0.7);
+}
+
+#datawrapper
+{
+	display: table;
+	width: 80%;
+	height: 100%;
+	max-height: 460px;
+	font-size: 0px;
+	margin: auto;
+}
+
+.title {
+	display: flex; 
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.info {
+	display: flex;
+	flex-direction: column;
+}
+
+input,
+select {
+	padding: 5px;
+	margin-bottom: 30px;
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid #eee;
+}
+
+input::placeholder {
+	color: #eee;
+}
+
+option:focus {
+	border: none;
+}
+
+option {
+	background: black;
+	border: none;
+}
+
+.checkbox input {
+	margin: 0 10px 0 0;
+	vertical-align: middle;
+}
+
+.checkbox a {
+	color: #26a9e0;
+}
+
+.checkbox a:hover {
+	color: #85d6de;
+}
+
+.btn-item,
+button {
+	padding: 10px 5px;
+	margin-top: 20px;
+	border-radius: 5px;
+	border: none;
+	background: #26a9e0;
+	text-decoration: none;
+	font-size: 15px;
+	font-weight: 400;
+	color: #fff;
+}
+
+.btn-item {
+	display: inline-block;
+	margin: 20px 5px 0;
+}
+
+button {
+	width: 100%;
+}
+
+button:hover,
+.btn-item:hover {
+	background: #85d6de;
+}
