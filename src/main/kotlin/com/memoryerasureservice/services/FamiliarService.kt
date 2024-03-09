@@ -19,7 +19,6 @@ class FamiliarService {
     fun addFamiliar(familiar: Familiar): Familiar = transaction {
         val insertedId = Familiars.insertAndGetId {
             it[name] = familiar.name
-            it[phone] = familiar.phone
             it[email] = familiar.email
             it[homePhone] = familiar.homePhone
             it[workPhone] = familiar.workPhone
@@ -31,10 +30,11 @@ class FamiliarService {
     fun updateFamiliar(id: Int, familiar: Familiar): Familiar? = transaction {
         Familiars.update({ Familiars.id eq id }) {
             it[name] = familiar.name
-            it[phone] = familiar.phone
             it[email] = familiar.email
             it[homePhone] = familiar.homePhone
             it[workPhone] = familiar.workPhone
+            it[homeAddress] = familiar.homeAddress
+            it[workAddress] = familiar.workAddress
             it[state] = familiar.state
         }
         getFamiliar(id)
@@ -59,10 +59,11 @@ class FamiliarService {
         Familiar(
             id = row[Familiars.id].value,
             name = row[Familiars.name],
-            phone = row[Familiars.phone],
             email = row[Familiars.email],
             homePhone = row[Familiars.homePhone],
             workPhone = row[Familiars.workPhone],
+            homeAddress = row[Familiars.homeAddress],
+            workAddress = row[Familiars.workAddress],
             state = row[Familiars.state]
         )
 }

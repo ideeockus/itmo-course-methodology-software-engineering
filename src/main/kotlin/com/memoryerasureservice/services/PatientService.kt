@@ -3,7 +3,10 @@ package com.memoryerasureservice.services
 import FamiliarService
 import com.memoryerasureservice.api.ApplyRequest
 import com.memoryerasureservice.api.CreatePatientAppointment
+import com.memoryerasureservice.database.Familiars
+import com.memoryerasureservice.database.PatientFamiliarRelationTable
 import com.memoryerasureservice.database.Patients
+import com.memoryerasureservice.model.Familiar
 import com.memoryerasureservice.model.Patient
 import com.memoryerasureservice.model.PatientState
 import com.memoryerasureservice.utils.parseLocalDateTimeFromString
@@ -93,6 +96,28 @@ class PatientService {
 
         // Возвращение обновленного пациента
         getPatientById(id)
+    }
+
+    fun addFamiliarToPatient(patientId: Int, familiarData: Familiar): Familiar? = transaction {
+        // Добавление нового родственника в таблицу Familiars и получение его ID
+        val familiarId = Familiars.insert {
+            it[name] = familiarData.name
+            it[email] = familiarData.email
+            it[homePhone] = familiarData.homePhone
+            it[workPhone] = familiarData.workPhone
+            it[homeAddress] = familiarData.homeAddress
+            it[workAddress] = familiarData.workAddress
+            it[state] = familiarData.state
+        } get Familiars.id
+
+        // Создание связи между пациентом и родственником в PatientFamiliarRelationTable
+        PatientFamiliarRelationTable.insert {
+            it[familiar] = familiarId
+            it[patient] = patientId
+        }
+
+        // Возвращение добавленного родственника
+        FamiliarService().getFamiliar(familiarId.value)
     }
 
     private fun toPatient(row: ResultRow): Patient {

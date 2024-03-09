@@ -150,6 +150,22 @@ async function getPatientCard(token) {
 //   }
 }
 
+function update_ui_patient_data() {
+  let pacient_name = document.getElementById('pacient_name')
+  let patient_phone = document.getElementById('patient_phone')
+  let patient_email = document.getElementById('patient_email')
+  let pacient_home = document.getElementById('pacient_home')
+  let pacient_work = document.getElementById('pacient_work')
+  let brainmap = document.getElementById('brainmap')
+
+  pacient_name.textContent = p_name
+  patient_phone.textContent = p_phone
+  patient_email.textContent = p_email
+  pacient_home.textContent = p_address
+  pacient_work.textContent = p_address
+  brainmap.href = ""
+}
+
 function hiddable_close()
 {
   this.document.getElementById("hiddable_form").setAttribute("style","display:none;");
@@ -174,6 +190,29 @@ function edit_contact()
 
   let height = this.document.getElementById("contact_edit_form").offsetWidth + 100;
   this.document.getElementById("hiddable_form").setAttribute("style","display:block; height: "+height+"px");
+
+  // Собрать данные
+  const formData = new FormData(form);
+  const p_name = formData.get('name');
+  const p_phone = formData.get('phone_home');
+  const p_home = formData.get('home');
+  const p_phone_work = formData.get('phone_work');
+  const work = formData.get('work');
+  const avatar = formData.get('avatar');
+
+  let pacient_name = document.getElementById('pacient_name')
+  let patient_phone = document.getElementById('patient_phone')
+  let patient_email = document.getElementById('patient_email')
+  let pacient_home = document.getElementById('pacient_home')
+  let pacient_work = document.getElementById('pacient_work')
+  let brainmap = document.getElementById('brainmap')
+
+  pacient_name.textContent = p_name
+  patient_phone.textContent = p_phone
+  patient_email.textContent = p_email
+  pacient_home.textContent = p_phone
+  pacient_work.textContent = p_phone_work
+  brainmap.href = ""
 }
 
 function add_contact()
@@ -197,32 +236,35 @@ pacient_edit_form.addEventListener('submit', (event) => {
   let formData = new FormData(pacient_edit_form);
 //  let date = document.getElementById('dateOfTimeslots').value
 
-  fetch("/edit_patient_card", {
+  fetch("patients/edit_patient_card", {
     method: "post",
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      patientId: patientCardData['patientCard']['id'],
-      patientCard: {
-          id: patientCardData['patientCard']['id'],
-          name: formData.get("name"),
-          email: formData.get("email"),
-          phone: formData.get("phone"),
-          age: patientCardData['patientCard']['age'],
-          address: formData.get("home"),
-//          photo_url: formData.get("avatar"),
-          // token: patientCardData['patientCard']['token'],
-          // familiars: patientCardData['patientCard']['familiars'],
-          state: patientCardData['patientCard']['state'],
-      }
+      id: patientCardData['id'],
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      age: patientCardData['age'],
+      address: formData.get("home"),
+      state: patientCardData['state'],
+      // patientCard: {
+      //     id: patientCardData['patientCard']['id'],
+      //     name: formData.get("name"),
+      //     email: formData.get("email"),
+      //     phone: formData.get("phone"),
+      //     age: patientCardData['patientCard']['age'],
+      //     address: formData.get("home"),
+      //     state: patientCardData['patientCard']['state'],
+      // }
     })
   })
   .then( (response) => {
      response.json().then(resp_json => {
         console.log('Request succeeded:', resp_json);
-        window.location.replace("user_profile_v2.html?token="+patientCardData['patientCard']['token']);
+        window.location.replace("patient_profile?token="+patientCardData['userToken']);
      })
      .catch(error => {
         console.log('Request error:', error);
@@ -240,28 +282,34 @@ contact_add_form.addEventListener('submit', (event) => {
   let formData = new FormData(contact_add_form);
 //  let date = document.getElementById('dateOfTimeslots').value
 
-  fetch("/add_patient_familiar", {
+  fetch("patients/add_patient_familiar", {
     method: "post",
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      patientId: patientCardData['patientCard']['id'],
-      familiar: {
-          name: formData.get("name"),
-          homePhone: formData.get("phone_home"),
-          workPhone: formData.get("phone_work"),
-          homeAddress: formData.get("home"),
-          workAddress: formData.get("work"),
-          state: "NotProcessed",
-      }
+      patientId: patientCardData['id'],
+      name: formData.get("name"),
+      homePhone: formData.get("phone_home"),
+      workPhone: formData.get("phone_work"),
+      homeAddress: formData.get("home"),
+      workAddress: formData.get("work"),
+      state: "NotProcessed",
+      // familiar: {
+      //     name: formData.get("name"),
+      //     homePhone: formData.get("phone_home"),
+      //     workPhone: formData.get("phone_work"),
+      //     homeAddress: formData.get("home"),
+      //     workAddress: formData.get("work"),
+      //     state: "NotProcessed",
+      // }
     })
   })
   .then( (response) => {
      response.json().then(resp_json => {
         console.log('Request succeeded:', resp_json);
-        window.location.replace("user_profile_v2.html?token="+patientCardData['patientCard']['token']);
+        window.location.replace("patient_profile?token="+patientCardData['userToken']);
      })
      .catch(error => {
         console.log('Request error:', error);

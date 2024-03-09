@@ -15,10 +15,11 @@ enum class FamiliarState {
 data class Familiar(
     val id: Int,
     val name: String,
-    val phone: String,
     val email: String?,
     val homePhone: String?,
     val workPhone: String?,
+    val homeAddress: String?,
+    val workAddress: String?,
     val state: FamiliarState,
 )
 

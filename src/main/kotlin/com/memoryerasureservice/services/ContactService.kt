@@ -2,11 +2,10 @@ package com.memoryerasureservice.services
 
 import com.memoryerasureservice.database.ContactAttempts
 import com.memoryerasureservice.database.ContactCards
-import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.update
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
 
 class ContactService {
 
