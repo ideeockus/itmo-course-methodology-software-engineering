@@ -10,11 +10,8 @@ import com.memoryerasureservice.model.Familiar
 import com.memoryerasureservice.model.Patient
 import com.memoryerasureservice.model.PatientState
 import com.memoryerasureservice.utils.parseLocalDateTimeFromString
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.update
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.UUID
@@ -68,6 +65,13 @@ class PatientService {
 
         return getPatientById(patientId.value)
     }
+
+    fun getAllPatients(): List<Patient> = transaction {
+        // Получение всех пациентов из базы данных
+        Patients.selectAll()
+            .map { toPatient(it) }
+    }
+
 
     fun getPatientById(id: Int): Patient = transaction {
         // Получение пациента по ID

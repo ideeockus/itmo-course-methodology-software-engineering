@@ -1,0 +1,131 @@
+.screen {
+  position: relative;
+  width: 1440px;
+  height: 852px;
+  background-color: #ffffff;
+}
+
+.screen .nav-bar-top {
+  position: absolute;
+  width: 1440px;
+  height: 100px;
+  top: 0;
+  left: 0;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-color: #d9d9d9;
+}
+
+.screen .logo {
+  position: absolute;
+  height: 48px;
+  top: 25px;
+  left: 72px;
+  font-family: "Inter-SemiBold", Helvetica;
+  font-weight: 600;
+  color: var(--black);
+  font-size: 32px;
+  letter-spacing: -0.96px;
+  line-height: 48px;
+  white-space: nowrap;
+}
+
+.screen .view {
+  width: 278px;
+  gap: 16px;
+  padding: 28px 40px;
+  top: 152px;
+  left: 55px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+}
+
+.screen .image {
+  position: relative;
+  width: 181px;
+  height: 181px;
+  object-fit: cover;
+}
+
+.screen .text-wrapper {
+  position: relative;
+  width: fit-content;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 24px;
+  color: #000000;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.screen .div {
+  position: absolute;
+  top: 122px;
+  left: 441px;
+  font-family: "Inter-SemiBold", Helvetica;
+  font-weight: 600;
+  font-size: 32px;
+  color: #000000;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.screen .view-2 {
+  width: 834px;
+  height: 646px;
+  gap: 10px;
+  padding: 0px 0px 10px;
+  top: 185px;
+  left: 417px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+}
+
+.screen .view-3 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 110px;
+  background-color: #ffffff;
+}
+
+.screen .img {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  top: 10px;
+  left: 20px;
+  object-fit: cover;
+}
+
+.screen .text-wrapper-2 {
+  position: absolute;
+  width: 403px;
+  height: 44px;
+  top: 10px;
+  left: 130px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.screen .element {
+  position: absolute;
+  width: 403px;
+  top: 54px;
+  left: 130px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  color: #7f7f7f;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: normal;
+}

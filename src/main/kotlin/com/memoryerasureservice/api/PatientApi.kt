@@ -29,7 +29,11 @@ fun Route.patientApi(patientService: PatientService) {
             call.respond(HttpStatusCode.Created, patient)
         }
 
-//        route("/patients") {
+        get("/get_all_patients") {
+            val patients = patientService.getAllPatients()
+            call.respond(patients)
+        }
+
         get("/{id}") {
             val id = call.parameters["id"]?.toIntOrNull()
             if (id == null) {

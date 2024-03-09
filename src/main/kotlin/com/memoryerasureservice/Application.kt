@@ -53,6 +53,8 @@ fun Routing.staticContent() {
     staticFiles("/technic_profile", File("src/main/resources/static/new_frontend/technic_profile"))
     staticFiles("/patient_apply", File("src/main/resources/static/new_frontend/patient_apply"))
     staticFiles("/patient_profile", File("src/main/resources/static/new_frontend/patient_profile"))
+    staticFiles("/auth_form", File("src/main/resources/static/new_frontend/auth_form"))
+    staticFiles("/patients_list", File("src/main/resources/static/new_frontend/patients_list"))
 
 //    static("/") {
 //        staticFiles("/", File("src/main/resources/static/new_frontend/main")) {
