@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Профиль техника</title>
-    <link rel="stylesheet" href="technic_profile/styles.css">
-    <link rel="stylesheet" href="technic_profile/modal_window_styles.css">
+    <link rel="stylesheet" href="technic_profile/globals.css">
+    <link rel="stylesheet" href="technic_profile/styleguide.css">
+    <link rel="stylesheet" href="technic_profile/style.css">
     <script src="technic_profile/scripts.js" defer></script>
 </head>
 <body>
     <header class="nav-bar-top">
         <div class="logo">Anamnesia</div>
     </header>
-    <div class="main-container">
-        <aside class="profile-info">
+    <main class="screen">
+        <section class="profile-info">
             <img class="image" src="img/4x.webp" alt="Техник">
             <h1 class="text-wrapper">Техник<br>Логинов С. Д.</h1>
-        </aside>
-        <main class="equipment">
+        </section>
+        <section class="equipment">
             <h2>Оборудование</h2>
-            <table id="equipmentTable">
+            <table>
                 <thead>
                     <tr>
                         <th>Название</th>
@@ -60,53 +61,10 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="primary-CTA" id="add_new_equipment">+</div>
-        </main>
-    </div>
-
-
-   <!--  <main class="screen">
-        <section class="profile-info">
-            <img class="image" src="img/4x.webp" alt="Техник">
-            <h1 class="text-wrapper">Техник<br>Логинов С. Д.</h1>
         </section>
-        <section class="equipment">
-            
-        </section>
-    </main> -->
+    </main>
     <footer>
         <!-- Место для футера, если нужно -->
     </footer>
-
-    <!-- Модальное окно -->
-    <div id="editModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <form id="editForm">
-                <input type="hidden" id="edit-id">
-                <label for="edit-name">Название:</label>
-                <input type="text" id="edit-name">
-                <label for="edit-type">Тип:</label>
-                <input type="text" id="edit-type">
-                <label for="edit-status">Статус:</label>
-                <select id="edit-status">
-                    <option value="Available">Доступно</option>
-                    <option value="Reserved">Зарезервировано</option>
-                    <option value="Corrupted">Повреждено</option>
-                    <option value="NotAvailable">Не доступно</option>
-                    <option value="Busy">Занято</option>
-                </select>
-                <label for="edit-location">Место на складе:</label>
-                <input type="text" id="edit-location">
-                <label for="edit-maintenanceDate">Дата обслуживания:</label>
-                <input type="date" id="edit-maintenanceDate">
-                <label for="edit-serviceLife">Срок службы (годы):</label>
-                <input type="number" id="edit-serviceLife">
-                <button type="button" id="saveButton" onclick="updateEquipment()">Сохранить изменения</button>
-            </form>
-        </div>
-    </div>
-
-
 </body>
 </html>

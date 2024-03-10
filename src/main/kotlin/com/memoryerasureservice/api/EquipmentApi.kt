@@ -1,16 +1,70 @@
 package com.memoryerasureservice.api
 
+import com.memoryerasureservice.model.EquipmentData
+import com.memoryerasureservice.model.EquipmentStatus
+import com.memoryerasureservice.model.LocalDateSerializer
 import com.memoryerasureservice.services.EquipmentService
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import io.ktor.http.*
+import kotlinx.serialization.Serializable
 import java.time.LocalDate
 
 fun Application.registerEquipmentRoutes(equipmentService: EquipmentService) {
     routing {
         route("/equipment") {
+            post("/") {
+                val equipmentData = call.receive<AddEquipmentReq>()
+                val addedEquipment = equipmentService.addEquipment(equipmentData)
+                if (addedEquipment != null) {
+                    call.respond(HttpStatusCode.Created, addedEquipment)
+                } else {
+                    call.respond(HttpStatusCode.InternalServerError)
+                }
+            }
+
+            get("/{id}") {
+                val id = call.parameters["id"]?.toIntOrNull()
+                if (id == null) {
+                    call.respond(HttpStatusCode.BadRequest, "Invalid ID format")
+                    return@get
+                }
+                val equipmentData = equipmentService.getEquipmentById(id)
+                if (equipmentData != null) {
+                    call.respond(HttpStatusCode.OK, equipmentData)
+                } else {
+                    call.respond(HttpStatusCode.NotFound)
+                }
+            }
+
+            put("/{id}") {
+                val id = call.parameters["id"]?.toIntOrNull()
+                val equipmentData = call.receive<EquipmentData>()
+                if (id == null || !equipmentService.updateEquipment(id, equipmentData)) {
+                    call.respond(HttpStatusCode.BadRequest, "Problem updating equipment")
+                } else {
+                    call.respond(HttpStatusCode.OK, equipmentData)
+                }
+            }
+
+            delete("/{id}") {
+                val id = call.parameters["id"]?.toIntOrNull()
+                if (id == null || !equipmentService.deleteEquipment(id)) {
+                    call.respond(HttpStatusCode.BadRequest, "Problem deleting equipment")
+                } else {
+                    call.respond(HttpStatusCode.OK)
+                }
+            }
+
+            get("/list") {
+                val equipmentList = equipmentService.getAllEquipment()
+                call.respond(HttpStatusCode.OK, equipmentList)
+            }
+
+
+
             // Проверка доступности оборудования
             get("/availability") {
                 val isAvailable = equipmentService.checkEquipmentAvailability()
@@ -61,3 +115,15 @@ data class EquipmentAssignRequest(
 
 @kotlinx.serialization.Serializable
 data class NextMaintenanceDateRequest(val nextMaintenanceDate: String?)
+
+
+@kotlinx.serialization.Serializable
+data class AddEquipmentReq(
+    val name: String,
+    val type: String,
+    val status: EquipmentStatus,
+    val location: String?,
+    @Serializable(with = LocalDateSerializer::class)
+    val maintenanceDate: LocalDate?,
+    val serviceLife: Int?
+)
