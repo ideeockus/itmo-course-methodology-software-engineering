@@ -47,6 +47,7 @@ fun main() {
 fun Routing.staticContent() {
     // Настройка корня статического контента
     staticFiles("/", File("src/main/resources/static/new_frontend/"))
+    staticFiles("/main_menu", File("src/main/resources/static/new_frontend/main_menu"))
     staticFiles("/main", File("src/main/resources/static/new_frontend/main"))
     staticFiles("/page_full_profile", File("src/main/resources/static/new_frontend/page_full_profile"))
     staticFiles("/patient_history", File("src/main/resources/static/new_frontend/patient_history"))
@@ -55,6 +56,8 @@ fun Routing.staticContent() {
     staticFiles("/patient_profile", File("src/main/resources/static/new_frontend/patient_profile"))
     staticFiles("/auth_form", File("src/main/resources/static/new_frontend/auth_form"))
     staticFiles("/patients_list", File("src/main/resources/static/new_frontend/patients_list"))
+    staticFiles("/apply", File("src/main/resources/static/new_frontend/apply"))
+    staticFiles("/statistics", File("src/main/resources/static/new_frontend/statistics"))
 
 //    static("/") {
 //        staticFiles("/", File("src/main/resources/static/new_frontend/main")) {

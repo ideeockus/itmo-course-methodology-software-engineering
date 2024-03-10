@@ -30,6 +30,11 @@
   white-space: nowrap;
 }
 
+.logo a {
+    color: #26A9E0;
+    text-decoration: none;
+}
+
 .screen .view {
   width: 278px;
   gap: 16px;

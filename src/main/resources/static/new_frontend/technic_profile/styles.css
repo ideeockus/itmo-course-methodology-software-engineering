@@ -16,6 +16,11 @@ body {
     color: #333;
 }
 
+.logo a {
+    color: #26A9E0;
+    text-decoration: none;
+}
+
 .profile-info {
     background-color: #fff;
     padding: 20px;

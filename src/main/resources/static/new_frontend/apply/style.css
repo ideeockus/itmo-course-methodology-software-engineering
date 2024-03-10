@@ -1,0 +1,118 @@
+.screen {
+  position: relative;
+  width: 1440px;
+  height: 852px;
+  background-color: #ffffff;
+}
+
+.screen .nav-bar-top {
+  position: absolute;
+  width: 1440px;
+  height: 100px;
+  top: 0;
+  left: 0;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-color: #d9d9d9;
+}
+
+.screen .logo {
+  position: absolute;
+  height: 48px;
+  top: 25px;
+  left: 72px;
+  font-family: "Inter", Helvetica;
+  font-weight: 600;
+  color: var(--black);
+  font-size: 32px;
+  letter-spacing: -0.96px;
+  line-height: 48px;
+  white-space: nowrap;
+}
+
+.screen .overlap {
+  top: 210px;
+  left: 65px;
+  position: absolute;
+  width: 1375px;
+  height: 642px;
+}
+
+.screen .overlap-group {
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 1375px;
+  height: 642px;
+}
+
+.screen .title-description {
+  display: inline-flex;
+  flex-direction: column;
+  height: 304px;
+  align-items: flex-start;
+  gap: 33px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.screen .text-wrapper {
+  width: 630px;
+  height: 127px;
+  margin-top: -1px;
+  font-weight: 700;
+  color: #1a202c;
+  font-size: 46px;
+  letter-spacing: 0.92px;
+  line-height: 55.2px;
+  position: relative;
+  font-family: "Inter", Helvetica;
+}
+
+.screen .div {
+  width: 568px;
+  height: 51px;
+  opacity: 0.45;
+  font-weight: 500;
+  color: var(--black);
+  font-size: 16px;
+  letter-spacing: -0.32px;
+  line-height: 25.6px;
+  position: relative;
+  font-family: "Inter", Helvetica;
+}
+
+.screen .image {
+  position: absolute;
+  width: 791px;
+  height: 508px;
+  top: 134px;
+  left: 584px;
+  object-fit: cover;
+}
+
+.screen .primary-CTA {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 9px 21px;
+  position: absolute;
+  top: 335px;
+  left: 0;
+  background-color: #000000;
+  border-radius: 10px;
+}
+
+.screen .text-wrapper-2 {
+  width: fit-content;
+  margin-top: -1px;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 14px;
+  letter-spacing: -0.42px;
+  line-height: 21px;
+  white-space: nowrap;
+  position: relative;
+  font-family: "Inter", Helvetica;
+}
