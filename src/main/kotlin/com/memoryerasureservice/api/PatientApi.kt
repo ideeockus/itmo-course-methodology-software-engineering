@@ -3,7 +3,6 @@ package com.memoryerasureservice.api
 import FamiliarService
 import com.memoryerasureservice.model.Familiar
 import com.memoryerasureservice.model.FamiliarState
-import com.memoryerasureservice.model.Patient
 import com.memoryerasureservice.model.PatientState
 import com.memoryerasureservice.services.PatientService
 import io.ktor.http.*
@@ -99,6 +98,21 @@ fun Route.patientApi(patientService: PatientService) {
             }
         }
 //        }
+        post("/set_next_familiar_status/{id}") {
+            val familiarId = call.parameters["id"]?.toIntOrNull()
+            if (familiarId == null) {
+                call.respond(HttpStatusCode.BadRequest, "Invalid familiar ID")
+                return@post
+            }
+
+            val nextState = FamiliarService().setNextFamiliarStatus(familiarId)
+            if (nextState == null) {
+                call.respond(HttpStatusCode.NotFound, "Familiar not found or unable to update status")
+            } else {
+                call.respond(HttpStatusCode.OK, nextState)
+            }
+        }
+
     }
 }
 
@@ -133,8 +147,6 @@ data class UpdatePatientReq(
     val email: String?,
     val age: Int?,
     val address: String?,
-
-//    val familiars: List<Familiar>,
     val state: PatientState,
 )
 

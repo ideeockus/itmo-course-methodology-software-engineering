@@ -154,3 +154,25 @@ button:hover {
 }
 
 /* Стили для таблицы и кнопок остаются прежними */
+
+.procedure-equipment-list {
+    margin: 30px;
+}
+
+.procedure-equipment-list h3 {
+    color: #39bAc3;
+    margin-top: 20px;
+}
+
+.procedure-equipment-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.procedure-equipment-list li {
+    background-color: #f0f0f0;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}

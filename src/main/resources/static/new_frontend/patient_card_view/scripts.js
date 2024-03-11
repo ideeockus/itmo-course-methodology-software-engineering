@@ -20,21 +20,11 @@ function fillCardData() {
   let urlParams = new URLSearchParams(window.location.search);
   let userToken = urlParams.get('token');
   let isDoctor = urlParams.get('isDoctor');
-  let memoryScan = urlParams.get('memoryScan');
 
   if (isDoctor == "true") {
     console.log('is doctor');
     let pacient_scan_btn = document.getElementById('pacient_scan_btn');
     pacient_scan_btn.style.display = "block";
-  }
-
-  if (memoryScan === null) {
-    console.log('has no memory scan');
-    let patient_mem_erase_btn = document.getElementById('patient_mem_erase_btn');
-    patient_mem_erase_btn.disabled="true";
-    patient_mem_erase_btn.style.backgroundColor = "#aaaaaa";
-    patient_mem_erase_btn.style.cursor = "not-allowed";
-    patient_mem_erase_btn.onclick=null;
   }
 
   if (userToken === null) {
@@ -51,6 +41,7 @@ function fillCardData() {
       let p_address = patient['address'];
       let p_familiars = patient['familiars'];
       let p_state = patient['state'];
+      let memoryScan = patient['memoryScan'];
 
       let pacient_name = document.getElementById('pacient_name')
       let patient_phone = document.getElementById('patient_phone')
@@ -64,7 +55,26 @@ function fillCardData() {
       patient_email.textContent = p_email
       pacient_home.textContent = p_address
       pacient_work.textContent = p_address
-      brainmap.href = ""
+      // brainmap.href = ""
+
+      if (memoryScan === null) {
+        console.log('has no memory scan');
+        let patient_mem_erase_btn = document.getElementById('patient_mem_erase_btn');
+        patient_mem_erase_btn.disabled=true;
+        patient_mem_erase_btn.style.backgroundColor = "#aaaaaa";
+        patient_mem_erase_btn.style.cursor = "not-allowed";
+        patient_mem_erase_btn.onclick=null;
+      } else {
+        let brainmap = document.getElementById("brainmap");
+        let scanDate = new Date(memoryScan['dateTime']).toLocaleString('ru-RU', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        brainmap.textContent = "Карта воспоминаний за " + scanDate
+      }
 
       fillContacts(patient['familiars'])
   });
@@ -86,12 +96,13 @@ function fillContacts(familiars) {
         // Create the green_card div
         const greenCardDiv = document.createElement('div');
 
-        let color_class = {
+        let color_classes = {
             'NotifiedSuccessful': "green_card",
             'NotProcessed': "blue_card",
             'FailedToNotify': "red_card",
             'ProcessedUnsuccessful': "yellow_card",
-        }[familiar['state']];
+        };
+        let color_class = color_classes[familiar['state']];
         greenCardDiv.classList.add(color_class);
 
         // Create the h3 element for the pacient_name
@@ -129,6 +140,26 @@ function fillContacts(familiars) {
         greenCardDiv.appendChild(secondPElement);
         greenCardDiv.appendChild(secondIElement);
 //        greenCardDiv.appendChild(editBtnAnchor);
+
+        // Сохранение ID знакомого в атрибуте data-id
+        greenCardDiv.setAttribute('data-id', familiar['id']);
+
+        // Добавление обработчика события onclick, который вызывает setNextFamiliarStatus с текущим ID
+        greenCardDiv.onclick = function() {
+          const familiarId = this.getAttribute('data-id');
+          setNextFamiliarStatus(familiarId)
+              .then(nextState => {
+                  let newColorClass = color_classes[nextState];
+                  // Удаляем все текущие классы состояний
+                  this.classList.remove("green_card", "blue_card", "red_card", "yellow_card");
+                  // Добавляем новый класс, соответствующий обновленному статусу
+                  this.classList.add(newColorClass);
+              })
+              .catch(error => {
+                  console.error('Error updating familiar status:', error);
+              });
+      };
+
 
         list_wrapper.appendChild(greenCardDiv);
     });
@@ -259,22 +290,14 @@ pacient_edit_form.addEventListener('submit', (event) => {
       phone: formData.get("phone"),
       age: patientCardData['age'],
       address: formData.get("home"),
-      state: patientCardData['state'],
-      // patientCard: {
-      //     id: patientCardData['patientCard']['id'],
-      //     name: formData.get("name"),
-      //     email: formData.get("email"),
-      //     phone: formData.get("phone"),
-      //     age: patientCardData['patientCard']['age'],
-      //     address: formData.get("home"),
-      //     state: patientCardData['patientCard']['state'],
-      // }
+      // state: patientCardData['state'],
+      state: formData.get("state"),
     })
   })
   .then( (response) => {
      response.json().then(resp_json => {
         console.log('Request succeeded:', resp_json);
-        window.location.replace("patient_profile?token="+patientCardData['userToken']);
+        window.location.replace("patient_card_view?token="+patientCardData['userToken']);
      })
      .catch(error => {
         console.log('Request error:', error);
@@ -319,7 +342,7 @@ contact_add_form.addEventListener('submit', (event) => {
   .then( (response) => {
      response.json().then(resp_json => {
         console.log('Request succeeded:', resp_json);
-        window.location.replace("patient_profile?token="+patientCardData['userToken']);
+        window.location.replace("patient_card_view?token="+patientCardData['userToken']);
      })
      .catch(error => {
         console.log('Request error:', error);
@@ -329,82 +352,160 @@ contact_add_form.addEventListener('submit', (event) => {
 });
 
 
+function popup_patient_scan_progress() {
+    // Создание и стилизация диалога
+    let myDialog = document.createElement("dialog");
+    myDialog.style.width = "50%";
+    document.body.appendChild(myDialog);
 
-function popup_patient_scan_progress() {  
-  let myDialog = document.createElement("dialog");
-  myDialog.style.width = "50%";
-  document.body.appendChild(myDialog)
-  let text = document.createTextNode("Начинаем сканирование...");
-  myDialog.appendChild(text);
-  myDialog.showModal();
+    // Сообщение о начале сканирования
+    let textNode = document.createTextNode("Начинаем сканирование...");
+    myDialog.appendChild(textNode);
 
-  myDialog.addEventListener('click', (event) => {
-    myDialog.remove();
-  })
+    // Создание и стилизация контейнера прогресс-бара
+    let myProgress = createProgressBarContainer();
+    myDialog.appendChild(myProgress.barContainer);
 
-  // const statuses = ["Loading step 1", "Loading step 2", "Loading step 3", "Loading step 4"];
-  // let currentIndex = 0;
+    // Добавление текста состояния сканирования
+    let states = [
+        "Поиск воспоминаний...",
+        "Продолжайте думать, идет запись участка мозга",
+        "Думайте о своем объекте...",
+        "Сконцентрируйтесь, мозг сканируется"
+    ];
 
+    // Добавление кнопки "Завершить сканирование"
+    let finishButton = document.createElement("button");
+    finishButton.style.margin = "20px";
+    finishButton.disabled = true;
+    finishButton.textContent = "Завершить сканирование";
+    finishButton.addEventListener('click', () => {
+      recordMemoryScan(patientCardData['id'], "Воспоминания", "some data");
+      scanFinished();
+      myDialog.close();
+    });
+    myDialog.appendChild(finishButton);
 
-  // Create the progress bar element
-  var myProgress = document.createElement("div");
-  myProgress.id = "myProgress";
+    // Показ диалога
+    myDialog.showModal();
 
-  // Add the CSS styles to the progress bar element
-  myProgress.style.width = "100%";
-  myProgress.style.backgroundColor = "grey";
+    // Запуск анимации прогресс-бара
+    animateProgressBar(myProgress.bar, textNode, states, finishButton);
+}
 
-  // Create the progress bar element
-  var myBar = document.createElement("div");
+function createProgressBarContainer() {
+    let myProgress = document.createElement("div");
+    myProgress.style.width = "100%";
+    myProgress.style.backgroundColor = "grey";
 
-  // Add the CSS styles to the progress bar element
-  myBar.style.width = "1%";
-  myBar.style.height = "30px";
-  myBar.style.backgroundColor = "green";
+    let myBar = document.createElement("div");
+    myBar.style.width = "1%";
+    myBar.style.height = "30px";
+    myBar.style.backgroundColor = "green";
 
-  // Append the progress bar element to the progress element
-  myProgress.appendChild(myBar);
+    myProgress.appendChild(myBar);
 
-  // Add the progress element to the document body
-  myDialog.appendChild(myProgress);
+    return { barContainer: myProgress, bar: myBar };
+}
 
-  let states = ["Поиск воспоминаний...", "Продолжайте думать, идет запись участка мозга", "Думайте о своем объекте...", "Сконцентрируйтесь, мозг сканируется"]
+function animateProgressBar(bar, textNode, states, finishButton) {
+    let i = 0;
+    let width = 1;
+    let id = setInterval(frame, 500);
 
-
-
-  var i = 0;
-  function move() {
-    if (i == 0) {
-      i = 1;
-      // var elem = document.getElementById("myBar");
-      var width = 1;
-      var id = setInterval(frame, 500);
-      function frame() {
-        let r = Math.floor(Math.random()*100);
-        if (r < 18) {
-          var state = states[Math.floor(Math.random()*states.length)];
-          text.textContent = state;
+    function frame() {
+        if (Math.random() < 0.18) {
+            textNode.textContent = states[Math.floor(Math.random() * states.length)];
         }
-        
 
         if (width >= 100) {
-          clearInterval(id);
-          i = 0;
-          text.textContent = "Сканирование завершено!";
-          scanFinished();
+            clearInterval(id);
+            textNode.textContent = "Сканирование завершено!";
+            finishButton.disabled = false;
         } else {
-          width++;
-          myBar.style.width = width + "%";
+            width++;
+            bar.style.width = width + "%";
         }
-      }
     }
-  } 
-  move()
 }
+
+
+
+// function popup_patient_scan_progress() {  
+//   let myDialog = document.createElement("dialog");
+//   myDialog.style.width = "50%";
+//   document.body.appendChild(myDialog)
+//   let text = document.createTextNode("Начинаем сканирование...");
+//   myDialog.appendChild(text);
+//   myDialog.showModal();
+
+//   myDialog.addEventListener('click', (event) => {
+//     myDialog.remove();
+//   })
+
+//   // const statuses = ["Loading step 1", "Loading step 2", "Loading step 3", "Loading step 4"];
+//   // let currentIndex = 0;
+
+
+//   // Create the progress bar element
+//   var myProgress = document.createElement("div");
+//   myProgress.id = "myProgress";
+
+//   // Add the CSS styles to the progress bar element
+//   myProgress.style.width = "100%";
+//   myProgress.style.backgroundColor = "grey";
+
+//   // Create the progress bar element
+//   var myBar = document.createElement("div");
+
+//   // Add the CSS styles to the progress bar element
+//   myBar.style.width = "1%";
+//   myBar.style.height = "30px";
+//   myBar.style.backgroundColor = "green";
+
+//   // Append the progress bar element to the progress element
+//   myProgress.appendChild(myBar);
+
+//   // Add the progress element to the document body
+//   myDialog.appendChild(myProgress);
+
+//   let states = ["Поиск воспоминаний...", "Продолжайте думать, идет запись участка мозга", "Думайте о своем объекте...", "Сконцентрируйтесь, мозг сканируется"]
+
+
+
+//   var i = 0;
+//   function move() {
+//     if (i == 0) {
+//       i = 1;
+//       // var elem = document.getElementById("myBar");
+//       var width = 1;
+//       var id = setInterval(frame, 500);
+//       function frame() {
+//         let r = Math.floor(Math.random()*100);
+//         if (r < 18) {
+//           var state = states[Math.floor(Math.random()*states.length)];
+//           text.textContent = state;
+//         }
+        
+
+//         if (width >= 100) {
+//           clearInterval(id);
+//           i = 0;
+//           text.textContent = "Сканирование завершено!";
+//           scanFinished();
+//         } else {
+//           width++;
+//           myBar.style.width = width + "%";
+//         }
+//       }
+//     }
+//   } 
+//   move()
+// }
 
 function scanFinished() {
   let patient_mem_erase_btn = document.getElementById('patient_mem_erase_btn');
-  patient_mem_erase_btn.disabled="false";
+  patient_mem_erase_btn.disabled=false;
   patient_mem_erase_btn.style.backgroundColor = "#26a9e0";
   patient_mem_erase_btn.style.cursor = "pointer";
   patient_mem_erase_btn.onclick=popup_patient_mem_erase_progress;
@@ -487,4 +588,64 @@ function popup_patient_mem_erase_progress() {
     }
   } 
   move()
+}
+
+
+// Функция для отправки данных сканирования воспоминаний на сервер
+function recordMemoryScan(patientId, memoryItem, activityData) {
+    // Здесь мы создаем объект данных, который соответствует ожидаемому формату сервера
+    const memoryScanData = {
+        patientId: patientId,
+        memoryItem: memoryItem,
+        activityData: activityData
+    };
+
+    // Выполняем POST запрос с помощью fetch API
+    fetch('/memoryScans/record', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json', // Указываем тип содержимого
+            // 'Authorization': 'Bearer ваш_токен' // Если нужна авторизация
+        },
+        body: JSON.stringify(memoryScanData) // Преобразуем данные в JSON
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.text(); // Или response.json() если ожидается JSON ответ
+    })
+    .then(data => {
+        console.log('Memory scan recorded successfully:', data);
+        // Действия после успешной записи
+    })
+    .catch(error => {
+        console.error('Error during memory scan recording:', error);
+    });
+}
+
+
+function setNextFamiliarStatus(familiarId) {
+    return fetch(`patients/set_next_familiar_status/${familiarId}`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP status ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(nextState => {
+        console.log('Next state:', nextState);
+        // Здесь можно обновить интерфейс пользователя с новым состоянием
+        return nextState;
+    })
+    .catch(error => {
+        console.error('Error setting the next familiar status:', error);
+        // Здесь можно обработать ошибки
+    });
 }
