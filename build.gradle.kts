@@ -89,9 +89,18 @@ dependencies {
     testImplementation("org.jetbrains.exposed:exposed-dao:0.31.1")
     testImplementation("org.jetbrains.exposed:exposed-jdbc:0.31.1")
     testImplementation("com.h2database:h2:1.4.200") // Используем H2 для тестовой БД
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.5.10")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
+
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
 
 }
 
 application {
     mainClass.set("com.memoryerasureservice.ApplicationKt")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }

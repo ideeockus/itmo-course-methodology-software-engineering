@@ -26,6 +26,7 @@ class PatientService {
                 row[Patients.phone] = phone
                 row[Patients.email] = email
                 row[Patients.appointmentDate] = appointmentDateTime
+                row[Patients.state] = PatientState.Stage1
             } get Patients.id
         }
 
@@ -37,10 +38,11 @@ class PatientService {
         val patientId = transaction {
             // Вставка нового пациента в базу данных
             Patients.insert { row ->
-                row[Patients.name] = name
-                row[Patients.phone] = phone
-                row[Patients.email] = email
+                row[Patients.name] = req.name
+                row[Patients.phone] = req.phone
+                row[Patients.email] = req.email
                 row[Patients.appointmentDate] = parseLocalDateTimeFromString(req.appointmentDate)
+                row[Patients.state] = PatientState.Stage1
             } get Patients.id
         }
 
