@@ -41,8 +41,41 @@ class StatisticsService {
         }
         stats.add(Statistic("ServiceLifeExceeded", expiredEquipmentCount.toString()))
 
-        stats
+        localizeStatistics(stats)
     }
+
+    fun localizeStatistics(statistics: List<Statistic>): List<Statistic> {
+        val statusMap = mapOf(
+            "Available" to "Доступно",
+            "Reserved" to "Зарезервировано",
+            "Corrupted" to "Повреждено",
+            "NotAvailable" to "Не доступно",
+            "Busy" to "Занято"
+        )
+
+        val keyDescriptionMap = mapOf(
+            "EquipmentStatus" to "Статус оборудования",
+            "TotalPatients" to "Всего пациентов",
+            "TotalEquipment" to "Всего оборудования",
+            "ServiceLifeExceeded" to "Оборудование с истекшим сроком службы"
+        )
+
+        // Преобразование статистики
+        return statistics.map { statistic ->
+            // Разделение ключа на составляющие для обработки особых случаев, например "EquipmentStatus_Available"
+            val keyParts = statistic.key.split("_")
+            val localizedKey = when {
+                keyParts.size > 1 && keyParts[0] == "EquipmentStatus" -> {
+                    "${keyDescriptionMap["EquipmentStatus"]} '${statusMap[keyParts[1]] ?: keyParts[1]}'"
+                }
+                else -> {
+                    keyDescriptionMap[statistic.key] ?: statistic.key
+                }
+            }
+            Statistic(localizedKey, statistic.value)
+        }
+    }
+
 
     fun updateStatistic(key: String, value: String) = transaction {
         Statistics.update({ Statistics.key eq key }) {

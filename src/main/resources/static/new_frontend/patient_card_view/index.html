@@ -15,6 +15,7 @@
             <p id="patient_phone">+7 (920)-579-55-44</p>
             <i class="addr" id="pacient_home">место жительства</i>
             <i class="addr" id="pacient_work">место работы</i>
+            <p class="addr" id="patient_state">статус</p>
             <a id="brainmap" href="https://neurotorium.org/tool/brain-atlas">карта воспоминаний</a>
             <span id="pacient_edit_btn" class="edit_btn" onclick="edit_card()">Редактировать</span>
             <span id="pacient_scan_btn" class="edit_btn" onclick="popup_patient_scan_progress()">Начать сканирование мозга</span>
@@ -98,6 +99,7 @@
                   <option value="Stage2">Второе посещение</option>
                   <option value="Stage3">Карта загружена</option>
                   <option value="Stage4">Воспоминания стерты</option>
+                  <option value="Stage5">Отклонен</option>
                 </select>
                 <input type="text" name="avatar" placeholder="Ссылка на фото">
                 <input type="datetime-local" name="visit" value="2023-06-26T16:30">

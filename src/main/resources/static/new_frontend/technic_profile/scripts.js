@@ -116,6 +116,16 @@ const statusDictionary = {
     "Busy": "НА ВЫЕЗДЕ"
 };
 
+function getStatusKeyByValue(value) {
+    return Object.keys(statusDictionary).find(key => statusDictionary[key] === value) || "";
+}
+
+function convertDateToInputFormat(date) {
+    const parts = date.split(".");
+    return `${parts[2]}-${parts[1]}-${parts[0]}`;
+}
+
+
 function clearTable() {
     const table = document.getElementById("equipmentTable");
     let rows = table.rows.length;
@@ -215,9 +225,9 @@ function openEditModal(equipment_row) {
     document.getElementById("edit-id").value = id;
     document.getElementById("edit-name").value = row.cells[1].innerText;
     document.getElementById("edit-type").value = row.cells[2].innerText;
-    document.getElementById("edit-status").value = row.cells[3].innerText;
+    document.getElementById("edit-status").value = getStatusKeyByValue(row.cells[3].innerText);
     document.getElementById("edit-location").value = row.cells[4].innerText;
-    document.getElementById("edit-maintenanceDate").value = row.cells[5].innerText;
+    document.getElementById("edit-maintenanceDate").value = convertDateToInputFormat(row.cells[5].innerText);
     document.getElementById("edit-serviceLife").value = row.cells[6].innerText;
 
     // Установить обработчик события для кнопки "Сохранить изменения"

@@ -16,6 +16,22 @@ function resize_contact_list()
   this.document.getElementById("list_wrapper").setAttribute("style","width:"+ contacts_width +"px");
 }
 
+function patient_state_to_rus(state) {
+  if (state == "Stage1") {
+    return "Первое посещение";
+  } else if (state == "Stage2") {
+    return "Второе посещение";
+  } else if (state == "Stage3") {
+    return "Карта загружена";
+  } else if (state == "Stage4") {
+    return "Воспоминания стерты";
+  } else if (state == "Stage5") {
+    return "Отклонен";
+  } else {
+    return "Неизвестно"
+  }
+}
+
 function fillCardData() {
   let urlParams = new URLSearchParams(window.location.search);
   let userToken = urlParams.get('token');
@@ -42,6 +58,7 @@ function fillCardData() {
       let p_familiars = patient['familiars'];
       let p_state = patient['state'];
       let memoryScan = patient['memoryScan'];
+      let visit_dt = patient['appointmentDate'];
 
       let pacient_name = document.getElementById('pacient_name')
       let patient_phone = document.getElementById('patient_phone')
@@ -49,12 +66,16 @@ function fillCardData() {
       let pacient_home = document.getElementById('pacient_home')
       let pacient_work = document.getElementById('pacient_work')
       let brainmap = document.getElementById('brainmap')
+      let patient_state = document.getElementById('patient_state')
+      let visit_dt_elem = document.getElementById('next_visit')
 
       pacient_name.textContent = p_name
       patient_phone.textContent = p_phone
       patient_email.textContent = p_email
       pacient_home.textContent = p_address
       pacient_work.textContent = p_address
+      patient_state.textContent = patient_state_to_rus(p_state)
+      visit_dt_elem.textContent = visit_dt
       // brainmap.href = ""
 
       if (memoryScan === null) {
@@ -221,6 +242,21 @@ function edit_card()
   
   let height = this.document.getElementById("pacient_edit_form").offsetWidth + 100;
   this.document.getElementById("hiddable_form").setAttribute("style","display:block; height: "+height+"px");
+
+  // form filling
+  let form = document.getElementById("pacient_edit_form");
+  // Заполняем поля формы данными
+  form.querySelector('input[name="name"]').value = patientCardData['name'] || '';
+  form.querySelector('input[name="email"]').value = patientCardData['email'] || '';
+  form.querySelector('input[name="phone"]').value = patientCardData['phone'] || ''; // Предполагая, что phone - это объект с полем number
+  form.querySelector('input[name="home"]').value = patientCardData['address'] || ''; // Если адрес предполагается разделить, здесь может потребоваться дополнительная логика  
+  let stateValue = patientCardData['state'];
+  form.querySelector('select[name="state"]').value = stateValue;
+  
+  // Устанавливаем дату и время визита
+  if (patientCardData['appointmentDate']) {
+      form.querySelector('input[name="visit"]').value = patientCardData['appointmentDate'];
+  }
 }
 
 function edit_contact()
