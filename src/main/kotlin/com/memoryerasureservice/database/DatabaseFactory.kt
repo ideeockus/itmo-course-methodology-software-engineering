@@ -32,11 +32,11 @@ object DatabaseFactory {
     }
 
     private fun hikari(): HikariDataSource {
-        val dbHost = System.getenv("DB_HOST") ?: "localhost"
-        val dbPort = System.getenv("DB_PORT") ?: "5434"
-        val dbName = System.getenv("DB_NAME") ?: "mpi_db"
-        val dbUser = System.getenv("DB_USER") ?: "mpi_user"
-        val dbPassword = System.getenv("DB_PASSWORD") ?: "pass123"
+        val dbHost = System.getenv("DB_HOST") ?: "pg"
+        val dbPort = System.getenv("DB_PORT") ?: "5432"
+        val dbName = System.getenv("DB_NAME") ?: "studs"
+        val dbUser = System.getenv("DB_USER") ?: "s370037"
+        val dbPassword = System.getenv("DB_PASSWORD") ?: "LMvVLrpaX9nWi9Zm"
 
 
         val config = HikariConfig()
