@@ -72,6 +72,8 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation:$$ktor_version")
 //    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
     implementation("io.ktor:ktor-client-serialization:$$ktor_version")
+    implementation("io.ktor:ktor-server-status-pages:$ktor_version")
+    implementation("io.ktor:ktor-server-sessions:$ktor_version")
 //    implementation("org.postgresql:postgresql:42.2.18")
     implementation("org.jetbrains.exposed:exposed-java-time:0.35.1") // Проверьте версию
 

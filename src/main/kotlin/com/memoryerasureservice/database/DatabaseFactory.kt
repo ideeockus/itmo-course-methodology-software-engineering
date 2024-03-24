@@ -27,6 +27,8 @@ object DatabaseFactory {
                 Statistics,
                 PatientFamiliarRelationTable,
                 Familiars,
+                Users,
+                UserTokens,
             )
         }
     }

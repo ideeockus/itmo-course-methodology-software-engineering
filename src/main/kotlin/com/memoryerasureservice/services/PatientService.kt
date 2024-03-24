@@ -70,7 +70,7 @@ class PatientService {
 
     fun getAllPatients(): List<Patient> = transaction {
         // Получение всех пациентов из базы данных
-        Patients.selectAll()
+        Patients.selectAll().limit(100)
             .map { toPatient(it) }
     }
 

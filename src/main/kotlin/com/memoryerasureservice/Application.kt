@@ -2,20 +2,44 @@ package com.memoryerasureservice
 
 import com.memoryerasureservice.api.*
 import com.memoryerasureservice.database.DatabaseFactory
+import com.memoryerasureservice.model.UserRole
+import com.memoryerasureservice.model.UserSession
 import com.memoryerasureservice.services.*
+import com.memoryerasureservice.utils.authorize
+import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.http.content.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.plugins.statuspages.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.sessions.*
 import java.io.File
 
 fun main() {
     embeddedServer(Netty, port = 8890, host = "0.0.0.0") {
         install(ContentNegotiation) {
             json()
+        }
+        install(StatusPages) {
+            status(HttpStatusCode.NotFound) { call, status ->
+                call.respondFile(File("src/main/resources/static/new_frontend/page_404.html"))
+            }
+            status(HttpStatusCode.Forbidden) { call, status ->
+                call.respondFile(File("src/main/resources/static/new_frontend/page_403.html"))
+            }
+            status(HttpStatusCode.Unauthorized) { call, status ->
+                call.respondFile(File("src/main/resources/static/new_frontend/page_401.html"))
+            }
+//            statusFile(HttpStatusCode.Unauthorized, HttpStatusCode.PaymentRequired, filePattern = "error#.html")
+        }
+        install(Sessions) {
+            cookie<UserSession>("USER_SESSION") {
+                cookie.extensions["SameSite"] = "lax"
+            }
         }
         DatabaseFactory.init()
 
@@ -41,6 +65,9 @@ fun main() {
         val statisticsService = StatisticsService()
         registerStatisticsRoutes(statisticsService)
 
+        val userService = UserService()
+        registerAuthRoutes(userService)
+
     }.start(wait = true)
 }
 
@@ -50,51 +77,23 @@ fun Routing.staticContent() {
     staticFiles("/main_menu", File("src/main/resources/static/new_frontend/main_menu"))
     staticFiles("/main", File("src/main/resources/static/new_frontend/main"))
     staticFiles("/page_full_profile", File("src/main/resources/static/new_frontend/page_full_profile"))
-    staticFiles("/patient_history", File("src/main/resources/static/new_frontend/patient_history"))
-    staticFiles("/technic_profile", File("src/main/resources/static/new_frontend/technic_profile"))
+
     staticFiles("/patient_apply", File("src/main/resources/static/new_frontend/patient_apply"))
-    staticFiles("/patient_profile", File("src/main/resources/static/new_frontend/patient_profile"))
     staticFiles("/auth_form", File("src/main/resources/static/new_frontend/auth_form"))
-    staticFiles("/patients_list", File("src/main/resources/static/new_frontend/patients_list"))
     staticFiles("/apply", File("src/main/resources/static/new_frontend/apply"))
-    staticFiles("/statistics", File("src/main/resources/static/new_frontend/statistics"))
 
-//    static("/") {
-//        staticFiles("/", File("src/main/resources/static/new_frontend/main")) {
-//            defaultResource("index.html")
-//        }
-//    }
-//
-//    // Настройка маршрутов для поддиректорий с учетом новой сигнатуры
-//    listOf("page_full_profile", "patient_history", "technic_profile").forEach { dir ->
-//        static("/$dir") {
-//            staticFiles("/", File("src/main/resources/static/new_frontend/$dir")) {
-//                defaultResource("index.html")
-//            }
-//        }
-//    }
+    authorize(setOf( UserRole.ADMIN, UserRole.TECHNICIAN, UserRole.MANAGER)) {
+        staticFiles("/technic_profile", File("src/main/resources/static/new_frontend/technic_profile"))
+    }
 
-//    static("/") {
-//        staticRootFolder = File("src/resources/static/new_frontend")
-//        files("main")
-//        default("main/index.html")
-//    }
+    authorize(setOf( UserRole.ADMIN, UserRole.DOCTOR, UserRole.ERASER, UserRole.NOTIFICATION_AGENT)) {
+        staticFiles("/patient_history", File("src/main/resources/static/new_frontend/patient_history"))
+        staticFiles("/patients_list", File("src/main/resources/static/new_frontend/patients_list"))
+        staticFiles("/patient_profile", File("src/main/resources/static/new_frontend/patient_profile"))
+    }
 
-//    static("/page_full_profile") {
-//        staticRootFolder = File("src/resources/static/new_frontend")
-//        files("page_full_profile")
-//        default("page_full_profile/index.html")
-//    }
-//
-//    static("/patient_history") {
-//        staticRootFolder = File("src/resources/static/new_frontend")
-//        files("patient_history")
-//        default("patient_history/index.html")
-//    }
-//
-//    static("/technic_profile") {
-//        staticRootFolder = File("src/resources/static/new_frontend")
-//        files("technic_profile")
-//        default("technic_profile/index.html")
-//    }
+    authorize(setOf( UserRole.ADMIN, UserRole.MANAGER)) {
+        staticFiles("/statistics", File("src/main/resources/static/new_frontend/statistics"))
+    }
 }
+

@@ -11,12 +11,6 @@ import java.util.*
 fun Application.registerErasureRoutes(erasureService: ErasureService) {
     routing {
         route("/erasure") {
-//            post("/start") {
-//                val patientId = call.receive<Int>()
-//                val sessionId = erasureService.startErasureSession(patientId)
-//                call.respond(HttpStatusCode.OK, sessionId)
-//            }
-
             // Подготовка команды стирателей
             get("/team/prepare/{procedureId}") {
                 val procedureId = call.parameters["procedureId"]?.toIntOrNull()
