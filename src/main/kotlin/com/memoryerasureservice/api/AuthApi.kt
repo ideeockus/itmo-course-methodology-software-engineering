@@ -21,7 +21,7 @@ fun Application.registerAuthRoutes(userService: UserService) {
                 call.respond(HttpStatusCode.Unauthorized, "Invalid credentials")
             }
         }
-        post("/api/logout") {
+        post("/logout") {
             // Завершаем сессию пользователя
             call.sessions.clear<UserSession>()
 

@@ -74,13 +74,14 @@ fun main() {
 fun Routing.staticContent() {
     // Настройка корня статического контента
     staticFiles("/", File("src/main/resources/static/new_frontend/"))
-    staticFiles("/main_menu", File("src/main/resources/static/new_frontend/main_menu"))
     staticFiles("/main", File("src/main/resources/static/new_frontend/main"))
-    staticFiles("/page_full_profile", File("src/main/resources/static/new_frontend/page_full_profile"))
-
+    staticFiles("/patient_profile", File("src/main/resources/static/new_frontend/patient_profile"))
     staticFiles("/patient_apply", File("src/main/resources/static/new_frontend/patient_apply"))
     staticFiles("/auth_form", File("src/main/resources/static/new_frontend/auth_form"))
     staticFiles("/apply", File("src/main/resources/static/new_frontend/apply"))
+
+    // we dont need it (?)
+    staticFiles("/page_full_profile", File("src/main/resources/static/new_frontend/page_full_profile"))
 
     authorize(setOf( UserRole.ADMIN, UserRole.TECHNICIAN, UserRole.MANAGER)) {
         staticFiles("/technic_profile", File("src/main/resources/static/new_frontend/technic_profile"))
@@ -89,11 +90,22 @@ fun Routing.staticContent() {
     authorize(setOf( UserRole.ADMIN, UserRole.DOCTOR, UserRole.ERASER, UserRole.NOTIFICATION_AGENT)) {
         staticFiles("/patient_history", File("src/main/resources/static/new_frontend/patient_history"))
         staticFiles("/patients_list", File("src/main/resources/static/new_frontend/patients_list"))
-        staticFiles("/patient_profile", File("src/main/resources/static/new_frontend/patient_profile"))
+        staticFiles("/patient_card_view", File("src/main/resources/static/new_frontend/patient_card_view"))
     }
 
     authorize(setOf( UserRole.ADMIN, UserRole.MANAGER)) {
         staticFiles("/statistics", File("src/main/resources/static/new_frontend/statistics"))
+    }
+
+    authorize(setOf(
+        UserRole.ADMIN,
+        UserRole.MANAGER,
+        UserRole.ERASER,
+        UserRole.DOCTOR,
+        UserRole.NOTIFICATION_AGENT,
+        UserRole.TECHNICIAN,
+    )) {
+        staticFiles("/main_menu", File("src/main/resources/static/new_frontend/main_menu"))
     }
 }
 

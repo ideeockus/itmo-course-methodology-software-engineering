@@ -98,6 +98,9 @@ class PatientService {
             it[name] = patientData.name
             it[phone] = patientData.phone
             it[email] = patientData.email
+            it[address] = patientData.address
+            it[age] = patientData.age
+            it[state] = patientData.state
         }
 
         // Возвращение обновленного пациента
