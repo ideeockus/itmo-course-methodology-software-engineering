@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // fill user data
+  let user_name_elem = document.getElementById("user_name");
+  let user_name = localStorage.getItem('userName');
+  user_name_elem.textContent = user_name;
+
+
+
+  // get patient list
   fetch('patients/get_all_patients')
     .then(response => response.json())
     .then(data => {

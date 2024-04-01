@@ -14,6 +14,7 @@ object Patients : IntIdTable() {
 
     val age = integer("age").nullable()
     val address = varchar("address", 255).nullable()
+    // todo work address
 
     val memoryScanId = uuid("memory_scan_id").nullable()
     val erasureSessionId = uuid("erasure_session_id").nullable()

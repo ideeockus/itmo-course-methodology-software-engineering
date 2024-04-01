@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             localStorage.setItem('sessionToken', data.token);
+            localStorage.setItem('userName', data.name);
             // Перенаправляем пользователя на главную страницу
             window.location.href = '/main_menu';
         })

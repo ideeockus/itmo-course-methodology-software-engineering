@@ -20,7 +20,7 @@ import io.ktor.server.sessions.*
 import java.io.File
 
 fun main() {
-    embeddedServer(Netty, port = 8890, host = "0.0.0.0") {
+    embeddedServer(Netty, port = 8891, host = "0.0.0.0") {
         install(ContentNegotiation) {
             json()
         }

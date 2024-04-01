@@ -11,6 +11,7 @@ enum class PatientState {
     Stage2,
     Stage3,
     Stage4,
+    Stage5,
 }
 
 @Serializable
@@ -24,6 +25,7 @@ data class Patient(
 
     var age: Int?,
     var address: String?,
+    // todo add work address
 
     val memoryScan: MemoryScan?,
     val erasureSession: ErasureSession?,

@@ -53,8 +53,8 @@
             </div>
             <div class="info">
                 <input class="fname" type="text" name="name" placeholder="ФИО" required>
-                <input type="text" name="email" placeholder="Почта" >
-                <input type="text" name="phone" placeholder="Номер телефона" required>
+                <input type="email" name="email" placeholder="Почта" required>
+                <input type="tel" name="phone" pattern="\+?[0-9]{11}" placeholder="Номер телефона" required>
             </div>
             <div class="checkbox">
                 <input type="checkbox" name="policy_checked" required><span>Я согласен с <a href="personal_data_policy.html">Политикой</a> обработки персональных данных</span>

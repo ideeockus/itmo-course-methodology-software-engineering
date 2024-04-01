@@ -55,6 +55,7 @@ function fillCardData() {
       let p_phone = patient['phone'];
       let p_email = patient['email'];
       let p_address = patient['address'];
+      // todo add work address
       let p_familiars = patient['familiars'];
       let p_state = patient['state'];
       let memoryScan = patient['memoryScan'];

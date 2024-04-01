@@ -103,7 +103,7 @@ class PatientService {
             it[state] = patientData.state
         }
 
-        // Возвращение обновленного пациента
+        // Возвращение обновленного пациентаU
         getPatientById(id)
     }
 

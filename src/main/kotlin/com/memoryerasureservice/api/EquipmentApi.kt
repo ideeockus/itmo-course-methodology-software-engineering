@@ -16,7 +16,7 @@ import java.time.LocalDate
 
 fun Application.registerEquipmentRoutes(equipmentService: EquipmentService) {
     routing {
-        authorize(setOf( UserRole.ADMIN, UserRole.TECHNICIAN)) {
+        authorize(setOf( UserRole.ADMIN, UserRole.TECHNICIAN, UserRole.MANAGER)) {
             route("/equipment") {
                 post("/") {
                     val equipmentData = call.receive<AddEquipmentReq>()

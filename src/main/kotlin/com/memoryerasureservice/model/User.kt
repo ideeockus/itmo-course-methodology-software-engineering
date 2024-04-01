@@ -9,4 +9,5 @@ data class User(
     val name: String,
     val passwordHash: String, // Пароль должен быть захеширован
     val role: UserRole
+    // todo add photo
 )

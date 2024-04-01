@@ -90,8 +90,8 @@
             <form id="pacient_edit_form" action="">
                 <h2>Редактирование карточки</h2>
                 <input type="text" name="name" placeholder="Имя пациента">
-                <input type="text" name="email" placeholder="Почта">
-                <input type="text" name="phone" placeholder="Номер телефона">
+                <input type="email" name="email" placeholder="Почта">
+                <input type="tel" pattern="\+?[0-9]{11}" name="phone" placeholder="Номер телефона">
                 <input type="text" name="home" placeholder="Место жительства">
                 <input type="text" name="work" placeholder="Место работы">
                 <select name="state">
@@ -109,9 +109,9 @@
             <form id="contact_edit_form" action="">
                 <h2>Редактирование контактного лица</h2>
                 <input type="text" name="name" placeholder="Имя контактного лица">
-                <input type="text" name="phone_home" placeholder="Домашний номер телефона">
+                <input type="tel" pattern="\+?[0-9]{11}" name="phone_home" placeholder="Домашний номер телефона">
                 <input type="text" name="home" placeholder="Место жительства">
-                <input type="text" name="phone_work" placeholder="Рабочий номер телефона">
+                <input type="tel" pattern="\+?[0-9]{11}" name="phone_work" placeholder="Рабочий номер телефона">
                 <input type="text" name="work" placeholder="Место работы">
                 <!-- <input type="text" name="avatar" placeholder="Ссылка на фото"> -->
                 <input type="submit" value="Сохранить">
@@ -120,9 +120,9 @@
             <form id="contact_add_form" action="">
                 <h2>Добавление контактного лица</h2>
                 <input type="text" name="name" placeholder="Имя контактного лица">
-                <input type="text" name="phone_home" placeholder="Домашний номер телефона">
+                <input type="tel" pattern="\+?[0-9]{11}" name="phone_home" placeholder="Домашний номер телефона">
                 <input type="text" name="home" placeholder="Место жительства">
-                <input type="text" name="phone_work" placeholder="Рабочий номер телефона">
+                <input type="tel" pattern="\+?[0-9]{11}" name="phone_work" placeholder="Рабочий номер телефона">
                 <input type="text" name="work" placeholder="Место работы">
                 <!-- <input type="text" name="avatar" placeholder="Ссылка на фото"> -->
                 <input type="submit" value="Сохранить">

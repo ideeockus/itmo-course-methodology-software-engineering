@@ -67,7 +67,7 @@ class UserService {
                 row[expiresAt] = expires
             }
 
-            UserSession(user.id, user.role, token)
+            UserSession(user.id, user.name, user.role, token)
         } else {
             null
         }
